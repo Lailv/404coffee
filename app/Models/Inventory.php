@@ -6,9 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inventory extends Model
 {
-    protected $fillable = ['name', 'stock', 'unit', 'min_stock'];
-    public function recipes()
-    {
-        return $this->hasMany(Recipe::class);
-    }
+    protected $fillable = [
+
+        'ingredient_code',
+
+        'name',
+
+        'category',
+
+        'stock',
+
+        'unit',
+
+        'min_stock'
+    ];
 }

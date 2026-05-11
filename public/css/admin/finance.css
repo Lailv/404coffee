@@ -1,0 +1,221 @@
+.finance-page{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+/* =========================
+   HEADER
+========================= */
+.finance-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.finance-header h1{
+    font-size:32px;
+    margin-bottom:6px;
+    color:#111827;
+}
+
+.finance-header p{
+    color:#6b7280;
+}
+
+.finance-badge{
+    background:#dcfce7;
+    color:#166534;
+
+    padding:10px 16px;
+
+    border-radius:999px;
+
+    font-size:14px;
+    font-weight:600;
+}
+
+/* =========================
+   STATS
+========================= */
+.finance-stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+}
+
+.finance-card{
+    background:white;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    box-shadow:
+        0 2px 12px rgba(0,0,0,0.05);
+}
+
+.finance-card span{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.finance-card h2{
+    margin-top:12px;
+
+    font-size:28px;
+
+    color:#111827;
+}
+
+/* =========================
+   BEST SELLER
+========================= */
+.best-seller-card{
+    background:white;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    box-shadow:
+        0 2px 12px rgba(0,0,0,0.05);
+}
+
+.best-header{
+    margin-bottom:24px;
+}
+
+.best-header h2{
+    font-size:24px;
+    color:#111827;
+}
+
+.best-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:#f9fafb;
+
+    border-radius:16px;
+
+    padding:20px;
+}
+
+.best-item h3{
+    margin-bottom:6px;
+    color:#111827;
+}
+
+.best-item p{
+    color:#6b7280;
+}
+
+.best-badge{
+    background:#2563eb;
+    color:white;
+
+    padding:10px 14px;
+
+    border-radius:999px;
+
+    font-size:13px;
+    font-weight:600;
+}
+
+/* =========================
+   TRANSACTIONS
+========================= */
+.transaction-card{
+    background:white;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    box-shadow:
+        0 2px 12px rgba(0,0,0,0.05);
+}
+
+.transaction-header{
+    margin-bottom:24px;
+}
+
+.transaction-header h2{
+    font-size:24px;
+    color:#111827;
+}
+
+.transaction-table{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#f9fafb;
+}
+
+th{
+    padding:16px;
+    text-align:left;
+
+    font-size:14px;
+    color:#6b7280;
+}
+
+td{
+    padding:16px;
+
+    border-top:1px solid #f3f4f6;
+
+    color:#111827;
+}
+
+.status-badge{
+    background:#dcfce7;
+    color:#166534;
+
+    padding:8px 12px;
+
+    border-radius:999px;
+
+    font-size:12px;
+    font-weight:600;
+}
+
+/* =========================
+   EMPTY
+========================= */
+.empty-finance{
+    text-align:center;
+
+    padding:30px;
+
+    color:#6b7280;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:768px){
+
+    .finance-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .best-item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:14px;
+    }
+}
