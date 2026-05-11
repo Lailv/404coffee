@@ -10,6 +10,11 @@ use App\Http\Controllers\Admin\InventoryController;
 
 use App\Http\Controllers\Admin\RecipeController;
 
+use App\Http\Controllers\Admin\RestockController;
+
+use App\Http\Controllers\Admin\SupplierController;
+
+
 // ======================================================
 // ADMIN MODULE
 // ======================================================
@@ -94,10 +99,12 @@ Route::delete(
 
 )->name('admin.recipes.delete');
 
+
 // =========================
 // FINANCE
 // =========================
 
+// FINANCE PAGE
 Route::get(
 
     '/admin/finance',
@@ -105,3 +112,71 @@ Route::get(
     [FinanceController::class, 'index']
 
 )->name('admin.finance');
+
+
+// =========================
+// RESTOCK
+// =========================
+
+// RESTOCK PAGE
+Route::get(
+
+    '/admin/restock',
+
+    [RestockController::class, 'index']
+
+)->name('admin.restock');
+
+
+// CREATE RESTOCK PAGE
+Route::get(
+
+    '/admin/restock/create',
+
+    [RestockController::class, 'create']
+
+)->name('admin.restock.create');
+
+
+// STORE RESTOCK
+Route::post(
+
+    '/admin/restock/store',
+
+    [RestockController::class, 'store']
+
+)->name('admin.restock.store');
+
+
+// =========================
+// SUPPLIER
+// =========================
+
+// SUPPLIER PAGE
+Route::get(
+
+    '/admin/supplier',
+
+    [SupplierController::class, 'index']
+
+)->name('admin.supplier');
+
+
+// CREATE SUPPLIER PAGE
+Route::get(
+
+    '/admin/supplier/create',
+
+    [SupplierController::class, 'create']
+
+)->name('admin.supplier.create');
+
+
+// STORE SUPPLIER
+Route::post(
+
+    '/admin/supplier/store',
+
+    [SupplierController::class, 'store']
+
+)->name('admin.supplier.store');

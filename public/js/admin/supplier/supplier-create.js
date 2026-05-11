@@ -1,0 +1,1 @@
+console.log('Supplier create page loaded');
