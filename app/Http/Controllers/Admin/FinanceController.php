@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\FinanceTransaction;
 use App\Models\Order;
 use App\Models\OrderItem;
 
@@ -19,6 +19,7 @@ class FinanceController extends Controller
             today()
         )->sum('total_amount');
 
+
         // =========================
         // MONTHLY REVENUE
         // =========================
@@ -26,6 +27,7 @@ class FinanceController extends Controller
             'created_at',
             now()->month
         )->sum('total_amount');
+
 
         // =========================
         // TOTAL ORDERS TODAY
@@ -35,6 +37,7 @@ class FinanceController extends Controller
             today()
         )->count();
 
+
         // =========================
         // TOTAL ORDERS MONTH
         // =========================
@@ -43,33 +46,97 @@ class FinanceController extends Controller
             now()->month
         )->count();
 
+
         // =========================
         // BEST SELLER
         // =========================
         $bestSeller = OrderItem::selectRaw(
+
                 'product_id, SUM(qty) as total_qty'
+
             )
+
             ->groupBy('product_id')
+
             ->orderByDesc('total_qty')
+
             ->with('product')
+
             ->first();
+
+
+        // =========================
+        // TOTAL INCOME
+        // =========================
+        $totalIncome = FinanceTransaction::where(
+
+            'type',
+            'income'
+
+        )->sum('amount');
+
+
+        // =========================
+        // TOTAL EXPENSE
+        // =========================
+        $totalExpense = FinanceTransaction::where(
+
+            'type',
+            'expense'
+
+        )->sum('amount');
+
+
+        // =========================
+        // NET PROFIT
+        // =========================
+        $netProfit =
+
+            $totalIncome
+
+            -
+
+            $totalExpense;
+
 
         // =========================
         // RECENT TRANSACTIONS
         // =========================
-        $recentOrders = Order::latest()
+        $transactions = FinanceTransaction::latest()
+
             ->take(10)
+
             ->get();
 
+
+        // =========================
+        // RECENT ORDERS
+        // =========================
+        $recentOrders = Order::latest()
+
+            ->take(10)
+
+            ->get();
+
+
         return view(
-            'admin.finance',
+
+            'admin.finance.index',
+
             compact(
+
                 'todayRevenue',
                 'monthlyRevenue',
                 'todayOrders',
                 'monthlyOrders',
                 'bestSeller',
-                'recentOrders'
+                'recentOrders',
+
+                'totalIncome',
+                'totalExpense',
+                'netProfit',
+                'transactions'
+
             )
         );
     }

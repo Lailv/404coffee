@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
+use App\Models\FinanceTransaction;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Recipe;
@@ -73,6 +74,21 @@ extends Controller
             'status' =>
                 'pending'
         ]);
+
+        // =========================
+// SAVE FINANCE INCOME
+// =========================
+FinanceTransaction::create([
+
+    'type' => 'income',
+
+    'category' => 'Sales',
+
+    'amount' => $total,
+
+    'note' => 'Income dari penjualan POS',
+
+]);
 
         // =========================
         // SAVE ORDER ITEMS

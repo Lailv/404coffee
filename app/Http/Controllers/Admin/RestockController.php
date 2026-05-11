@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\FinanceTransaction;
 use App\Models\Inventory;
+use App\Http\Controllers\Controller;
 use App\Models\Restock;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
-
 class RestockController extends Controller
 {
     public function index()
@@ -28,33 +28,69 @@ class RestockController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'inventory_id' => 'required',
-            'supplier_id' => 'required',
-            'quantity' => 'required|numeric',
-            'purchase_price' => 'required|numeric',
-        ]);
+{
+    $request->validate([
 
-        $inventory = Inventory::findOrFail($request->inventory_id);
+        'inventory_id' => 'required',
+        'supplier_id' => 'required',
+        'qty' => 'required|numeric',
+        'price' => 'required|numeric',
 
-        $totalPrice = $request->quantity * $request->purchase_price;
+    ]);
 
-        Restock::create([
-            'inventory_id' => $request->inventory_id,
-            'supplier_id' => $request->supplier_id,
-            'quantity' => $request->quantity,
-            'unit' => $request->unit,
-            'purchase_price' => $request->purchase_price,
-            'total_price' => $totalPrice,
-            'notes' => $request->notes,
-        ]);
 
-        // update stock inventory
-        $inventory->stock += $request->quantity;
-        $inventory->save();
+    // TOTAL
+    $total = $request->qty * $request->price;
 
-        return redirect()->route('restock.index')
-            ->with('success', 'Restock berhasil ditambahkan');
-    }
+
+    // SAVE RESTOCK
+    $restock = Restock::create([
+
+        'inventory_id' => $request->inventory_id,
+
+        'supplier_id' => $request->supplier_id,
+
+        'qty' => $request->qty,
+
+        'price' => $request->price,
+
+        'total' => $total,
+
+    ]);
+
+
+    // UPDATE INVENTORY STOCK
+    $inventory = Inventory::find($request->inventory_id);
+
+    $inventory->stock += $request->qty;
+
+    $inventory->save();
+
+
+    // SAVE FINANCE EXPENSE
+    FinanceTransaction::create([
+
+        'type' => 'expense',
+
+        'category' => 'Restock',
+
+        'amount' => $total,
+
+        'note' => 'Restock bahan dari supplier',
+
+    ]);
+
+
+    return redirect()
+
+        ->route('admin.restock')
+
+        ->with(
+
+            'success',
+
+            'Restock berhasil ditambahkan'
+
+        );
+}
 }
