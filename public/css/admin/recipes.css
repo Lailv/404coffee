@@ -455,3 +455,271 @@ input[type="text"]:focus {
     .add-btn,
     .save-btn         { width: 100%; justify-content: center; }
 }
+
+/* ============================================================
+   MODAL FIX
+============================================================ */
+
+.modal-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,0.55);
+
+    backdrop-filter:blur(4px);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:24px;
+
+    z-index:9999;
+}
+
+.modal-overlay.active{
+
+    display:flex;
+}
+
+
+/* ============================================================
+   MODAL BOX
+============================================================ */
+
+.modal-box{
+
+    width:100%;
+
+    max-width:950px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-xl);
+
+    box-shadow:0 20px 60px rgba(15,23,42,0.18);
+
+    padding:28px;
+
+    animation:modalIn .25s var(--ease-out);
+}
+
+@keyframes modalIn{
+
+    from{
+
+        opacity:0;
+        transform:translateY(12px) scale(.98);
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+
+/* ============================================================
+   MODAL HEADER
+============================================================ */
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:24px;
+}
+
+.modal-header h2{
+
+    font-size:22px;
+
+    font-weight:600;
+
+    color:var(--text-primary);
+}
+
+.close-modal{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--surface-2);
+
+    color:var(--text-secondary);
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.2s;
+}
+
+.close-modal:hover{
+
+    background:var(--red-light);
+
+    color:var(--red);
+}
+
+
+/* ============================================================
+   RECIPE ACTIONS
+============================================================ */
+
+.recipe-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+
+/* ============================================================
+   EDIT BUTTON
+============================================================ */
+
+.edit-recipe-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    background:var(--blue-light);
+
+    color:var(--blue);
+
+    border:1px solid var(--blue-mid);
+
+    padding:7px 12px;
+
+    border-radius:var(--radius-sm);
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    font-family:'Inter', Arial, sans-serif;
+
+    transition:.2s;
+}
+
+.edit-recipe-btn:hover{
+
+    background:var(--blue);
+
+    color:white;
+
+    transform:translateY(-1px);
+}
+
+
+/* ============================================================
+   RECIPE META
+============================================================ */
+
+.recipe-meta{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:8px;
+
+    flex-wrap:wrap;
+}
+
+.recipe-price{
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:var(--text-primary);
+}
+
+.recipe-category{
+
+    background:var(--blue-light);
+
+    color:var(--blue);
+
+    border:1px solid var(--blue-mid);
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    font-size:11px;
+
+    font-weight:600;
+}
+
+
+/* ============================================================
+   FIX CARD BUTTON
+============================================================ */
+
+.recipe-group form{
+
+    margin:0;
+}
+
+
+/* ============================================================
+   RESPONSIVE MODAL
+============================================================ */
+
+@media(max-width:768px){
+
+    .modal-box{
+
+        padding:20px;
+    }
+
+    .recipe-actions{
+
+        width:100%;
+
+        justify-content:flex-start;
+
+        margin-top:14px;
+    }
+
+    .recipe-group-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:12px;
+    }
+}

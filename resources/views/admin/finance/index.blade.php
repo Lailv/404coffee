@@ -4,6 +4,8 @@
 
 @section('content')
 
+@include('admin.finance.add-expense')
+
 <link rel="stylesheet"
       href="{{ asset('css/admin/finance.css') }}">
 

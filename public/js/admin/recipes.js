@@ -1,5 +1,6 @@
 let ingredientCount = 1;
 
+
 // =========================
 // ADD INGREDIENT
 // =========================
@@ -7,11 +8,11 @@ function addIngredient()
 {
     ingredientCount++;
 
-    let wrapper = document.getElementById(
+    const wrapper = document.getElementById(
         'ingredient-wrapper'
     );
 
-    let html = `
+    const html = `
 
         <div class="ingredient-box">
 
@@ -49,6 +50,7 @@ function addIngredient()
 
                     <input
                         type="number"
+                        step="0.01"
                         name="quantity[]"
                         placeholder="Example: 18"
                         required>
@@ -77,6 +79,7 @@ function addIngredient()
     );
 }
 
+
 // =========================
 // REMOVE INGREDIENT
 // =========================
@@ -86,3 +89,47 @@ function removeIngredient(button)
         .closest('.ingredient-box')
         .remove();
 }
+
+
+// =========================
+// OPEN MODAL
+// =========================
+function openAddMenuModal()
+{
+    document
+        .getElementById('addMenuModal')
+        .classList
+        .add('active');
+}
+
+
+// =========================
+// CLOSE MODAL
+// =========================
+function closeAddMenuModal()
+{
+    document
+        .getElementById('addMenuModal')
+        .classList
+        .remove('active');
+}
+
+
+// =========================
+// CLOSE MODAL OUTSIDE CLICK
+// =========================
+window.addEventListener(
+    'click',
+
+    function(e)
+    {
+        const modal = document.getElementById(
+            'addMenuModal'
+        );
+
+        if(e.target === modal){
+
+            closeAddMenuModal();
+        }
+    }
+);

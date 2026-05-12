@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FinanceTransaction;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Http\Request;
 
 class FinanceController extends Controller
 {
@@ -140,4 +141,46 @@ class FinanceController extends Controller
             )
         );
     }
+
+public function storeExpense(
+    Request $request
+)
+{
+    $request->validate([
+
+        'category' => 'required',
+
+        'amount' => 'required|numeric',
+
+        'note' => 'nullable'
+
+    ]);
+
+
+    FinanceTransaction::create([
+
+        'type' => 'expense',
+
+        'category' => $request->category,
+
+        'amount' => $request->amount,
+
+        'note' => $request->note,
+
+    ]);
+
+
+    return redirect()
+
+        ->back()
+
+        ->with(
+
+            'success',
+
+            'Expense berhasil ditambahkan'
+
+        );
 }
+}
+

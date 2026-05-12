@@ -2,95 +2,184 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
+
 use App\Models\FinanceTransaction;
 use App\Models\Inventory;
-use App\Http\Controllers\Controller;
 use App\Models\Restock;
 use App\Models\Supplier;
-use Illuminate\Http\Request;
-class RestockController extends Controller
+
+class RestockController
+extends Controller
 {
+    // =========================
+    // RESTOCK PAGE
+    // =========================
     public function index()
     {
-        $restocks = Restock::with(['inventory', 'supplier'])
+        $restocks = Restock::with([
+
+                'inventory',
+                'supplier'
+
+            ])
+
             ->latest()
+
             ->get();
 
-        return view('admin.restock.index', compact('restocks'));
-    }
 
-    public function create()
-    {
         $inventories = Inventory::all();
+
         $suppliers = Supplier::all();
 
-        return view('admin.restock.create', compact('inventories', 'suppliers'));
+
+        return view(
+
+            'admin.restock',
+
+            compact(
+
+                'restocks',
+                'inventories',
+                'suppliers'
+
+            )
+        );
     }
 
-    public function store(Request $request)
-{
-    $request->validate([
 
-        'inventory_id' => 'required',
-        'supplier_id' => 'required',
-        'qty' => 'required|numeric',
-        'price' => 'required|numeric',
+    // =========================
+    // STORE RESTOCK
+    // =========================
+    public function store(
+        Request $request
+    )
+    {
+        $request->validate([
 
-    ]);
+            'inventory_id' => 'required',
 
+            'supplier_id' => 'required',
 
-    // TOTAL
-    $total = $request->qty * $request->price;
+            'qty' => 'required|numeric',
 
+            'price' => 'required|numeric',
 
-    // SAVE RESTOCK
-    $restock = Restock::create([
-
-        'inventory_id' => $request->inventory_id,
-
-        'supplier_id' => $request->supplier_id,
-
-        'qty' => $request->qty,
-
-        'price' => $request->price,
-
-        'total' => $total,
-
-    ]);
+        ]);
 
 
-    // UPDATE INVENTORY STOCK
-    $inventory = Inventory::find($request->inventory_id);
+        // =========================
+        // TOTAL
+        // =========================
+        $total =
 
-    $inventory->stock += $request->qty;
+            $request->qty
 
-    $inventory->save();
+            *
 
-
-    // SAVE FINANCE EXPENSE
-    FinanceTransaction::create([
-
-        'type' => 'expense',
-
-        'category' => 'Restock',
-
-        'amount' => $total,
-
-        'note' => 'Restock bahan dari supplier',
-
-    ]);
+            $request->price;
 
 
-    return redirect()
+        // =========================
+        // SAVE RESTOCK
+        // =========================
+        $restock = Restock::create([
 
-        ->route('admin.restock')
+            'inventory_id' =>
 
-        ->with(
+                $request->inventory_id,
 
-            'success',
+            'supplier_id' =>
 
-            'Restock berhasil ditambahkan'
+                $request->supplier_id,
+
+            'qty' =>
+
+                $request->qty,
+
+            'price' =>
+
+                $request->price,
+
+            'total' =>
+
+                $total,
+
+        ]);
+
+
+        // =========================
+        // UPDATE INVENTORY
+        // =========================
+        $inventory = Inventory::find(
+
+            $request->inventory_id
 
         );
-}
+
+        if($inventory){
+
+            $inventory->stock +=
+
+                $request->qty;
+
+            $inventory->save();
+        }
+
+
+        // =========================
+        // GET SUPPLIER
+        // =========================
+        $supplier = Supplier::find(
+
+            $request->supplier_id
+
+        );
+
+
+        // =========================
+        // SAVE FINANCE EXPENSE
+        // =========================
+        FinanceTransaction::create([
+
+            'type' => 'expense',
+
+            'category' => 'Restock',
+
+            'amount' => $total,
+
+            'note' =>
+
+                'Restock '
+
+                .
+
+                $inventory->name
+
+                .
+
+                ' dari '
+
+                .
+
+                $supplier->name,
+
+        ]);
+
+
+        return redirect()
+
+            ->route('admin.restock')
+
+            ->with(
+
+                'success',
+
+                'Restock berhasil ditambahkan'
+
+            );
+    }
 }

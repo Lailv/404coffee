@@ -15,89 +15,293 @@
         <div>
 
             <h1>
-                Recipe Builder
+                Menu Management
             </h1>
 
             <p>
-                Create menu recipes and ingredients
+                Manage menu, recipes, and ingredients
             </p>
 
         </div>
 
-        <div class="header-badge">
+        <button
+            class="save-btn"
+            onclick="openAddMenuModal()">
 
-            ERP Recipe System
+            <i class="fa-solid fa-plus"></i>
 
-        </div>
+            Add Menu
+
+        </button>
 
     </div>
 
-    <!-- FORM CARD -->
-    <div class="recipe-card">
 
-        @if(session('success'))
+    <!-- MENU GRID -->
+    <div class="recipe-groups">
 
-            <div class="success-alert">
+        @forelse($recipeGroups as $group)
 
-                {{ session('success') }}
+            @php
+
+                $recipes =
+                    \App\Models\Recipe::where(
+                        'product_id',
+                        $group->id
+                    )
+                    ->with('inventory')
+                    ->get();
+
+            @endphp
+
+            <div class="recipe-group">
+
+                <!-- CARD HEADER -->
+                <div class="recipe-group-header">
+
+                    <div>
+
+                        <div class="recipe-group-title">
+
+                            <i class="fa-solid fa-utensils"></i>
+
+                            {{ $group->name }}
+
+                        </div>
+
+                        <div class="recipe-meta">
+
+                            <span class="recipe-price">
+
+                                Rp {{ number_format(
+                                    $group->price,
+                                    0,
+                                    ',',
+                                    '.'
+                                ) }}
+
+                            </span>
+
+                            <span class="recipe-category">
+
+                                @if(
+                                    $group->category_id == 1
+                                )
+
+                                    Coffee
+
+                                @elseif(
+                                    $group->category_id == 2
+                                )
+
+                                    Non Coffee
+
+                                @else
+
+                                    Food
+
+                                @endif
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+                    <div class="recipe-actions">
+
+                        <!-- EDIT -->
+                        <button
+                            type="button"
+                            class="edit-recipe-btn">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Edit
+
+                        </button>
+
+
+                        <!-- DELETE -->
+                        <form
+                            action="{{ route(
+                                'admin.recipes.delete',
+                                $group->id
+                            ) }}"
+                            method="POST"
+
+                            onsubmit="return confirm(
+                                'Delete this menu?'
+                            )">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                class="delete-recipe-btn">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INGREDIENTS -->
+                <div class="recipe-items">
+
+                    @forelse($recipes as $recipe)
+
+                        <div class="recipe-item">
+
+                            <span>
+
+                                {{ $recipe->inventory->name }}
+
+                            </span>
+
+                            <strong>
+
+                                {{ $recipe->quantity }}
+
+                            </strong>
+
+                        </div>
+
+                    @empty
+
+                        <div class="empty-recipe">
+
+                            No recipe ingredients
+
+                        </div>
+
+                    @endforelse
+
+                </div>
 
             </div>
 
-        @endif
-
-        @if(session('error'))
-
-            <div class="error-alert">
-
-                {{ session('error') }}
-
-            </div>
-
-        @endif
-
-        @if($products->count() == 0)
+        @empty
 
             <div class="empty-recipe">
 
-                Semua menu sudah punya recipe ☕
+                No menu available ☕
 
             </div>
 
-        @else
+        @endforelse
 
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ADD MENU MODAL
+========================= -->
+<div class="modal-overlay"
+     id="addMenuModal">
+
+    <div class="modal-box">
+
+        <!-- HEADER -->
+        <div class="modal-header">
+
+            <h2>
+                Add New Menu
+            </h2>
+
+            <button
+                class="close-modal"
+                onclick="closeAddMenuModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+        <!-- FORM -->
         <form
-            action="{{ route('admin.recipes.store') }}"
+            action="{{ route('admin.products.store') }}"
             method="POST">
 
             @csrf
 
-            <!-- PRODUCT -->
-            <div class="form-section">
+            <!-- MENU -->
+            <div class="form-group">
 
                 <label>
-                    Select Menu
+                    Menu Name
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    required>
+
+            </div>
+
+
+            <!-- PRICE -->
+            <div class="form-group">
+
+                <label>
+                    Price
+                </label>
+
+                <input
+                    type="number"
+                    name="price"
+                    required>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+            <div class="form-group">
+
+                <label>
+                    Category
                 </label>
 
                 <select
-                    name="product_id"
+                    name="category_id"
                     required>
 
-                    @foreach($products as $product)
+                    <option value="">
+                        Select Category
+                    </option>
 
-                        <option
-                            value="{{ $product->id }}">
+                    <option value="1">
+                        Coffee
+                    </option>
 
-                            {{ $product->name }}
+                    <option value="2">
+                        Non Coffee
+                    </option>
 
-                        </option>
-
-                    @endforeach
+                    <option value="3">
+                        Food
+                    </option>
 
                 </select>
 
             </div>
 
-            <!-- INGREDIENT WRAPPER -->
+
+            <!-- INGREDIENTS -->
             <div id="ingredient-wrapper">
 
                 <div class="ingredient-box">
@@ -118,8 +322,7 @@
                             </label>
 
                             <select
-                                name="inventory_id[]"
-                                required>
+                                name="inventory_id[]">
 
                                 @foreach($inventories as $inventory)
 
@@ -136,6 +339,7 @@
 
                         </div>
 
+
                         <!-- QUANTITY -->
                         <div>
 
@@ -145,9 +349,8 @@
 
                             <input
                                 type="number"
-                                name="quantity[]"
-                                placeholder="Example: 18"
-                                required>
+                                step="0.01"
+                                name="quantity[]">
 
                         </div>
 
@@ -157,15 +360,14 @@
 
             </div>
 
-            <!-- BUTTON -->
+
+            <!-- BUTTONS -->
             <div class="button-group">
 
                 <button
                     type="button"
                     onclick="addIngredient()"
                     class="add-btn">
-
-                    <i class="fa-solid fa-plus"></i>
 
                     Add Ingredient
 
@@ -175,9 +377,7 @@
                     type="submit"
                     class="save-btn">
 
-                    <i class="fa-solid fa-floppy-disk"></i>
-
-                    Save Recipe
+                    Save Menu
 
                 </button>
 
@@ -185,121 +385,10 @@
 
         </form>
 
-        @endif
-
-    </div>
-
-    <!-- RECIPE LIST -->
-    <div class="recipe-list-card">
-
-        <div class="recipe-list-header">
-
-            <div>
-
-                <h2>
-                    Recipe List
-                </h2>
-
-                <p>
-                    Existing menu recipes
-                </p>
-
-            </div>
-
-        </div>
-
-        <div class="recipe-groups">
-
-            @forelse($recipeGroups as $group)
-
-                <div class="recipe-group">
-
-                    <!-- HEADER -->
-                    <div class="recipe-group-header">
-
-                        <div class="recipe-group-title">
-
-                            <i class="fa-solid fa-utensils"></i>
-
-                            {{ $group->product->name }}
-
-                        </div>
-
-                        <!-- DELETE -->
-                        <form
-                            action="{{ route(
-                                'admin.recipes.delete',
-                                $group->product_id
-                            ) }}"
-                            method="POST"
-
-                            onsubmit="return confirm(
-                                'Hapus recipe ini?'
-                            )">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="delete-recipe-btn">
-    <i class="fa-solid fa-trash"></i>
-    Delete
-</button>
-
-                        </form>
-
-                    </div>
-
-                    <!-- INGREDIENTS -->
-                    <div class="recipe-items">
-
-                        @foreach(
-
-                            \App\Models\Recipe::where(
-                                'product_id',
-                                $group->product_id
-                            )->with('inventory')->get()
-
-                            as $recipe
-
-                        )
-
-                            <div class="recipe-item">
-
-                                <span>
-
-                                    {{ $recipe->inventory->name }}
-
-                                </span>
-
-                                <strong>
-
-                                    {{ $recipe->quantity }}
-
-                                </strong>
-
-                            </div>
-
-                        @endforeach
-
-                    </div>
-
-                </div>
-
-            @empty
-
-                <div class="empty-recipe">
-
-                    Recipe belum ada ☕
-
-                </div>
-
-            @endforelse
-
-        </div>
-
     </div>
 
 </div>
+
 
 <!-- INVENTORY OPTIONS -->
 <script>
@@ -319,6 +408,7 @@ window.inventoryOptions = `
 `;
 
 </script>
+
 
 <!-- JS -->
 <script src="{{ asset('js/admin/recipes.js') }}">
