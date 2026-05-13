@@ -4,8 +4,6 @@
 
 @section('content')
 
-@include('admin.finance.add-expense')
-
 <link rel="stylesheet"
       href="{{ asset('css/admin/finance.css') }}">
 
@@ -34,12 +32,19 @@
 
     </div>
 
+    <!-- ADD EXPENSE -->
+    @include('admin.finance.add-expense')
+
+    <!-- STATS -->
     @include('admin.finance.stats')
 
+    <!-- BEST SELLER -->
     @include('admin.finance.best-seller')
 
+    <!-- TRANSACTIONS -->
     @include('admin.finance.transactions')
 
+    <!-- RECENT ORDERS -->
     @include('admin.finance.recent-orders')
 
 </div>

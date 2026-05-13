@@ -133,3 +133,50 @@ window.addEventListener(
         }
     }
 );
+
+// =========================
+// OPEN EDIT MODAL
+// =========================
+function openEditModal(
+    id,
+    name,
+    price,
+    category
+)
+{
+    // OPEN MODAL
+    document
+        .getElementById('editMenuModal')
+        .classList
+        .add('active');
+
+    // SET FORM ACTION
+    document
+        .getElementById('editMenuForm')
+        .action = `/admin/recipes/${id}`;
+
+    // FILL INPUTS
+    document
+        .getElementById('edit_name')
+        .value = name;
+
+    document
+        .getElementById('edit_price')
+        .value = price;
+
+    document
+        .getElementById('edit_category')
+        .value = category;
+}
+
+
+// =========================
+// CLOSE EDIT MODAL
+// =========================
+function closeEditMenuModal()
+{
+    document
+        .getElementById('editMenuModal')
+        .classList
+        .remove('active');
+}

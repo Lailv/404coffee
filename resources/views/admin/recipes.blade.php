@@ -30,12 +30,11 @@
 
             <i class="fa-solid fa-plus"></i>
 
-            Add Menu
+            + Add Menu
 
         </button>
 
     </div>
-
 
     <!-- MENU GRID -->
     <div class="recipe-groups">
@@ -84,15 +83,11 @@
 
                             <span class="recipe-category">
 
-                                @if(
-                                    $group->category_id == 1
-                                )
+                                @if($group->category_id == 1)
 
                                     Coffee
 
-                                @elseif(
-                                    $group->category_id == 2
-                                )
+                                @elseif($group->category_id == 2)
 
                                     Non Coffee
 
@@ -108,21 +103,25 @@
 
                     </div>
 
-
                     <!-- ACTIONS -->
                     <div class="recipe-actions">
 
                         <!-- EDIT -->
                         <button
                             type="button"
-                            class="edit-recipe-btn">
+                            class="edit-recipe-btn"
+                            onclick="openEditModal(
+                                {{ $group->id }},
+                                '{{ $group->name }}',
+                                '{{ $group->price }}',
+                                '{{ $group->category_id }}'
+                            )">
 
                             <i class="fa-solid fa-pen"></i>
 
                             Edit
 
                         </button>
-
 
                         <!-- DELETE -->
                         <form
@@ -154,7 +153,6 @@
                     </div>
 
                 </div>
-
 
                 <!-- INGREDIENTS -->
                 <div class="recipe-items">
@@ -205,7 +203,6 @@
 
 </div>
 
-
 <!-- =========================
      ADD MENU MODAL
 ========================= -->
@@ -231,7 +228,6 @@
 
         </div>
 
-
         <!-- FORM -->
         <form
             action="{{ route('admin.products.store') }}"
@@ -253,7 +249,6 @@
 
             </div>
 
-
             <!-- PRICE -->
             <div class="form-group">
 
@@ -267,7 +262,6 @@
                     required>
 
             </div>
-
 
             <!-- CATEGORY -->
             <div class="form-group">
@@ -299,7 +293,6 @@
                 </select>
 
             </div>
-
 
             <!-- INGREDIENTS -->
             <div id="ingredient-wrapper">
@@ -339,7 +332,6 @@
 
                         </div>
 
-
                         <!-- QUANTITY -->
                         <div>
 
@@ -359,7 +351,6 @@
                 </div>
 
             </div>
-
 
             <!-- BUTTONS -->
             <div class="button-group">
@@ -389,6 +380,123 @@
 
 </div>
 
+<!-- =========================
+     EDIT MENU MODAL
+========================= -->
+<div class="modal-overlay"
+     id="editMenuModal">
+
+    <div class="modal-box">
+
+        <!-- HEADER -->
+        <div class="modal-header">
+
+            <h2>
+                Edit Menu
+            </h2>
+
+            <button
+                class="close-modal"
+                onclick="closeEditMenuModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <!-- FORM -->
+        <form
+            id="editMenuForm"
+            method="POST">
+
+            @csrf
+            @method('PUT')
+
+            <!-- MENU -->
+            <div class="form-group">
+
+                <label>
+                    Menu Name
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    id="edit_name"
+                    required>
+
+            </div>
+
+            <!-- PRICE -->
+            <div class="form-group">
+
+                <label>
+                    Price
+                </label>
+
+                <input
+                    type="number"
+                    name="price"
+                    id="edit_price"
+                    required>
+
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="form-group">
+
+                <label>
+                    Category
+                </label>
+
+                <select
+                    name="category_id"
+                    id="edit_category"
+                    required>
+
+                    <option value="1">
+                        Coffee
+                    </option>
+
+                    <option value="2">
+                        Non Coffee
+                    </option>
+
+                    <option value="3">
+                        Food
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="button-group">
+
+                <button
+                    type="button"
+                    class="add-btn"
+                    onclick="closeEditMenuModal()">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    Update Menu
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 <!-- INVENTORY OPTIONS -->
 <script>
@@ -408,7 +516,6 @@ window.inventoryOptions = `
 `;
 
 </script>
-
 
 <!-- JS -->
 <script src="{{ asset('js/admin/recipes.js') }}">
