@@ -61,7 +61,7 @@
 
             <button type="submit">
 
-                Add Expense
+                +Add Expense
 
             </button>
 

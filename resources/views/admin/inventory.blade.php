@@ -2,297 +2,485 @@
 
 @section('title', 'Inventory')
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/inventory.css') }}">
-@endpush
-
 @section('content')
 
-<div class="inventory-wrapper">
+<link rel="stylesheet"
+      href="{{ asset('css/admin/inventory.css') }}">
 
-    <!-- TOP ACTION -->
-    <div class="top-action">
+<div class="inventory-page">
 
-        <h1>Inventory</h1>
+    <!-- HEADER -->
+    <div class="inventory-header">
+
+        <div>
+
+            <h1>
+                Inventory Management
+            </h1>
+
+            <p>
+                Monitor ingredients, stock levels, and inventory status
+            </p>
+
+        </div>
 
         <button
             onclick="openAddModal()"
             class="add-btn">
+
             + Add Ingredient
+
         </button>
 
     </div>
 
-    <!-- ADD MODAL -->
-    <div class="modal" id="addModal">
+    <!-- INVENTORY TABLE -->
+    <div class="inventory-card">
 
-        <div class="modal-content">
+        <div class="card-header">
 
-            <h2>Add Ingredient</h2>
-
-            <form
-                action="{{ route('admin.inventory.store') }}"
-                method="POST">
-
-                @csrf
-
-                <div>
-                    <label>Code</label>
-                    <input
-                        type="text"
-                        name="ingredient_code"
-                        placeholder="e.g. ING-001"
-                        required>
-                </div>
-
-                <div>
-                    <label>Ingredient Name</label>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="e.g. Susu Full Cream"
-                        required>
-                </div>
-
-                <div>
-                    <label>Category</label>
-                    <input
-                        type="text"
-                        name="category"
-                        placeholder="e.g. Dairy"
-                        required>
-                </div>
-
-                <div>
-                    <label>Stock</label>
-                    <input
-                        type="number"
-                        name="stock"
-                        placeholder="0"
-                        required>
-                </div>
-
-                <div>
-                    <label>Unit</label>
-                    <input
-                        type="text"
-                        name="unit"
-                        placeholder="e.g. liter, kg, pcs"
-                        required>
-                </div>
-
-                <div>
-                    <label>Minimum Stock</label>
-                    <input
-                        type="number"
-                        name="min_stock"
-                        placeholder="0"
-                        required>
-                </div>
-
-                <div class="modal-action">
-
-                    <button
-                        type="button"
-                        onclick="closeAddModal()"
-                        class="close-btn">
-                        Cancel
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="save-btn">
-                        Save
-                    </button>
-
-                </div>
-
-            </form>
+            <h2>
+                Ingredient Inventory
+            </h2>
 
         </div>
 
-    </div>
+        <div class="table-wrapper">
 
-    <!-- EDIT MODAL -->
-    <div class="modal" id="editModal">
+            <table>
 
-        <div class="modal-content">
-
-            <h2>Edit Ingredient</h2>
-
-            <form id="editForm" method="POST">
-
-                @csrf
-                @method('PUT')
-
-                <div>
-                    <label>Code</label>
-                    <input
-                        type="text"
-                        name="ingredient_code"
-                        id="edit_code"
-                        required>
-                </div>
-
-                <div>
-                    <label>Ingredient Name</label>
-                    <input
-                        type="text"
-                        name="name"
-                        id="edit_name"
-                        required>
-                </div>
-
-                <div>
-                    <label>Category</label>
-                    <input
-                        type="text"
-                        name="category"
-                        id="edit_category"
-                        required>
-                </div>
-
-                <div>
-                    <label>Stock</label>
-                    <input
-                        type="number"
-                        name="stock"
-                        id="edit_stock"
-                        required>
-                </div>
-
-                <div>
-                    <label>Unit</label>
-                    <input
-                        type="text"
-                        name="unit"
-                        id="edit_unit"
-                        required>
-                </div>
-
-                <div>
-                    <label>Minimum Stock</label>
-                    <input
-                        type="number"
-                        name="min_stock"
-                        id="edit_min_stock"
-                        required>
-                </div>
-
-                <div class="modal-action">
-
-                    <button
-                        type="button"
-                        onclick="closeEditModal()"
-                        class="close-btn">
-                        Cancel
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="save-btn">
-                        Update
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
-    <!-- TABLE -->
-    <div class="table-wrapper">
-
-        <table>
-
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Ingredient</th>
-                    <th>Category</th>
-                    <th>Stock</th>
-                    <th>Min Stock</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                @foreach($inventories as $item)
-
-                    @php
-                        if ($item->stock <= $item->min_stock) {
-                            $status = 'critical';
-                        } elseif ($item->stock <= ($item->min_stock * 1.5)) {
-                            $status = 'low';
-                        } else {
-                            $status = 'normal';
-                        }
-                    @endphp
+                <thead>
 
                     <tr>
 
-                        <td style="font-family: monospace; font-size: 12px; color: #64748b;">
-                            {{ $item->ingredient_code }}
-                        </td>
+                        <th>
+                            Code
+                        </th>
 
-                        <td style="font-weight: 500;">
-                            {{ $item->name }}
-                        </td>
+                        <th>
+                            Ingredient
+                        </th>
 
-                        <td style="color: #64748b;">
-                            {{ $item->category }}
-                        </td>
+                        <th>
+                            Category
+                        </th>
 
-                        <td>
-                            {{ $item->stock }}
-                            <span style="color:#94a3b8; font-size:12px;">{{ $item->unit }}</span>
-                        </td>
+                        <th>
+                            Stock
+                        </th>
 
-                        <td>
-                            {{ $item->min_stock }}
-                            <span style="color:#94a3b8; font-size:12px;">{{ $item->unit }}</span>
-                        </td>
+                        <th>
+                            Minimum
+                        </th>
 
-                        <td>
-                            <span class="badge {{ $status }}">
-                                {{ strtoupper($status) }}
-                            </span>
-                        </td>
+                        <th>
+                            Status
+                        </th>
 
-                        <td>
-                            <button
-                                onclick='editIngredient(
-                                    {{ $item->id }},
-                                    "{{ addslashes($item->ingredient_code) }}",
-                                    "{{ addslashes($item->name) }}",
-                                    "{{ addslashes($item->category) }}",
-                                    "{{ $item->stock }}",
-                                    "{{ addslashes($item->unit) }}",
-                                    "{{ $item->min_stock }}"
-                                )'
-                                class="edit-btn">
-                                ✏ Edit
-                            </button>
-                        </td>
+                        <th>
+                            Action
+                        </th>
 
                     </tr>
 
-                @endforeach
+                </thead>
 
-            </tbody>
+                <tbody>
 
-        </table>
+                    @foreach($inventories as $item)
+
+                        @php
+
+                            if ($item->stock <= $item->min_stock) {
+
+                                $status = 'critical';
+
+                            } elseif (
+                                $item->stock <= ($item->min_stock * 1.5)
+                            ) {
+
+                                $status = 'low';
+
+                            } else {
+
+                                $status = 'normal';
+
+                            }
+
+                        @endphp
+
+                        <tr>
+
+                            <td class="inventory-code">
+
+                                {{ $item->ingredient_code }}
+
+                            </td>
+
+                            <td class="inventory-name">
+
+                                {{ $item->name }}
+
+                            </td>
+
+                            <td>
+
+                                {{ $item->category }}
+
+                            </td>
+
+                            <td>
+
+                                {{ $item->stock }}
+
+                                <span class="inventory-unit">
+
+                                    {{ $item->unit }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                {{ $item->min_stock }}
+
+                                <span class="inventory-unit">
+
+                                    {{ $item->unit }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge {{ $status }}">
+
+                                    {{ strtoupper($status) }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    onclick='editIngredient(
+                                        {{ $item->id }},
+                                        "{{ addslashes($item->ingredient_code) }}",
+                                        "{{ addslashes($item->name) }}",
+                                        "{{ addslashes($item->category) }}",
+                                        "{{ $item->stock }}",
+                                        "{{ addslashes($item->unit) }}",
+                                        "{{ $item->min_stock }}"
+                                    )'
+
+                                    class="edit-btn">
+
+                                    ✏ Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    @endforeach
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 
 </div>
 
-@endsection
+<!-- =========================
+     ADD INGREDIENT MODAL
+========================= -->
+<div class="modal-overlay"
+     id="addModal">
 
-@push('scripts')
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Add Ingredient
+            </h2>
+
+            <button
+                class="close-modal"
+                onclick="closeAddModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <form
+            action="{{ route('admin.inventory.store') }}"
+            method="POST">
+
+            @csrf
+
+            <div class="form-group">
+
+                <label>
+                    Code
+                </label>
+
+                <input
+                    type="text"
+                    name="ingredient_code"
+                    placeholder="e.g. ING-001"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Ingredient Name
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="e.g. Full Cream Milk"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    type="text"
+                    name="category"
+                    placeholder="e.g. Dairy"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Stock
+                </label>
+
+                <input
+                    type="number"
+                    name="stock"
+                    placeholder="0"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Unit
+                </label>
+
+                <input
+                    type="text"
+                    name="unit"
+                    placeholder="e.g. liter, kg, pcs"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Minimum Stock
+                </label>
+
+                <input
+                    type="number"
+                    name="min_stock"
+                    placeholder="0"
+                    required>
+
+            </div>
+
+            <div class="button-group">
+
+                <button
+                    type="button"
+                    onclick="closeAddModal()"
+                    class="cancel-btn">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    Save Ingredient
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     EDIT INGREDIENT MODAL
+========================= -->
+<div class="modal-overlay"
+     id="editModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Edit Ingredient
+            </h2>
+
+            <button
+                class="close-modal"
+                onclick="closeEditModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <form
+            id="editForm"
+            method="POST">
+
+            @csrf
+            @method('PUT')
+
+            <div class="form-group">
+
+                <label>
+                    Code
+                </label>
+
+                <input
+                    type="text"
+                    id="edit_code"
+                    name="ingredient_code"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Ingredient Name
+                </label>
+
+                <input
+                    type="text"
+                    id="edit_name"
+                    name="name"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    type="text"
+                    id="edit_category"
+                    name="category"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Stock
+                </label>
+
+                <input
+                    type="number"
+                    id="edit_stock"
+                    name="stock"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Unit
+                </label>
+
+                <input
+                    type="text"
+                    id="edit_unit"
+                    name="unit"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Minimum Stock
+                </label>
+
+                <input
+                    type="number"
+                    id="edit_min_stock"
+                    name="min_stock"
+                    required>
+
+            </div>
+
+            <div class="button-group">
+
+                <button
+                    type="button"
+                    onclick="closeEditModal()"
+                    class="cancel-btn">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    Update Ingredient
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 <script src="{{ asset('js/admin/inventory.js') }}"></script>
-@endpush
+
+@endsection

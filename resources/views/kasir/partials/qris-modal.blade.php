@@ -1,46 +1,80 @@
 <!-- QRIS MODAL -->
 <div id="qrisModal"
-     class="modal">
+     class="qris-overlay">
 
-    <div class="modal-content">
+    <div class="qris-card">
 
-        <div class="modal-header">
+        <!-- HEADER -->
+        <div class="qris-header">
 
-            <h2>
-                QRIS Payment
-            </h2>
+            <div>
+
+                <h2>
+                    QRIS Payment
+                </h2>
+
+                <p>
+                    Scan the QR code to complete the payment
+                </p>
+
+            </div>
 
             <button
                 onclick="closeQrisModal()"
-                class="close-modal">
+                class="qris-close-btn">
 
-                &times;
+                <i class="fa-solid fa-xmark"></i>
 
             </button>
 
         </div>
 
-        <div class="modal-body">
+        <!-- BODY -->
+        <div class="qris-body">
 
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=404Coffee"
-                 alt="QRIS"
-                 class="qris-image">
+            <div class="qris-image-wrapper">
 
-            <p class="scan-text">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=404Coffee"
+                     alt="QRIS"
+                     class="qris-image">
 
-                Scan QR untuk pembayaran
+            </div>
 
-            </p>
+            <div class="qris-info">
+
+                <div class="qris-badge">
+
+                    <i class="fa-solid fa-shield"></i>
+
+                    Secure Payment
+
+                </div>
+
+                <p class="scan-text">
+
+                    Open your mobile banking or e-wallet app and scan the QR code above.
+
+                </p>
+
+            </div>
 
         </div>
 
-        <div class="modal-footer">
+        <!-- FOOTER -->
+        <div class="qris-footer">
 
             <button
                 onclick="closeQrisModal()"
-                class="btn-close">
+                class="qris-btn secondary">
 
-                Tutup
+                Close
+
+            </button>
+
+            <button
+                class="qris-btn primary">
+
+                Payment Completed
 
             </button>
 

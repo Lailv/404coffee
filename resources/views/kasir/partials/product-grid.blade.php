@@ -1,11 +1,20 @@
 <!-- MAIN PRODUCT AREA -->
-<main class="main-content">
+<main class="product-wrapper">
 
-    <header class="main-header">
+    <!-- HEADER -->
+    <header class="product-header">
 
-        <h1 class="title">
-            Menu
-        </h1>
+        <div>
+
+            <h1 class="product-title">
+                Menu
+            </h1>
+
+            <p class="product-subtitle">
+                {{ now()->translatedFormat('l, d F Y') }}
+            </p>
+
+        </div>
 
         <!-- SEARCH -->
         <form action="{{ route('pos') }}"
@@ -26,7 +35,7 @@
 
                 <input type="text"
                        name="search"
-                       placeholder="Search"
+                       placeholder="Cari menu..."
                        value="{{ request('search') }}"
                        autocomplete="off">
 
@@ -50,46 +59,56 @@
 
             <div class="product-card">
 
+                <!-- IMAGE -->
                 <div class="card-image">
 
-                    <img src="https://via.placeholder.com/150"
+                    <img src="https://via.placeholder.com/300x200"
                          alt="{{ $product->name }}">
 
                 </div>
 
-                <div class="card-details">
+                <!-- CONTENT -->
+                <div class="card-content">
 
-                    <h3 class="card-name">
-                        {{ $product->name }}
-                    </h3>
+                    <div class="card-info">
 
-                    <p class="price">
-                        Rp{{ number_format($product->price) }}
-                    </p>
+                        <h3 class="card-name">
+
+                            {{ $product->name }}
+
+                        </h3>
+
+                        <p class="card-price">
+
+                            Rp{{ number_format($product->price) }}
+
+                        </p>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <form action="{{ route('cart.add') }}"
+                          method="POST"
+                          class="add-to-cart-form">
+
+                        @csrf
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="{{ $product->id }}">
+
+                        <button type="submit"
+                                class="btn-add">
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            Tambah
+
+                        </button>
+
+                    </form>
 
                 </div>
-
-                <!-- ADD TO CART -->
-                <form action="{{ route('cart.add') }}"
-                      method="POST"
-                      class="add-to-cart-form">
-
-                    @csrf
-
-                    <input type="hidden"
-                           name="product_id"
-                           value="{{ $product->id }}">
-
-                    <button type="submit"
-                            class="btn btn-add">
-
-                        <i class="fa-solid fa-plus"></i>
-
-                        Tambah
-
-                    </button>
-
-                </form>
 
             </div>
 

@@ -1,112 +1,118 @@
 <!-- PAYMENT SECTION -->
-<div class="payment-section">
+<div class="payment-wrapper">
 
-    <form
-        id="checkoutForm"
+    <div class="payment-card">
 
-        action="{{ route('checkout') }}"
+        <!-- HEADER -->
+        <div class="payment-header">
 
-        method="POST">
+            <div>
 
-        @csrf
+                <h2>
+                    Payment
+                </h2>
 
-        <!-- CUSTOMER NAME -->
-        <div class="customer-form">
+                <p>
+                    Complete customer payment information
+                </p>
 
-            <label>
-
-                Nama Customer
-
-            </label>
-
-            <input
-                type="text"
-
-                name="customer_name"
-
-                class="customer-input"
-
-                placeholder="Input nama customer..."
-
-                required>
+            </div>
 
         </div>
 
-        <!-- PAYMENT METHOD -->
-        <div class="payment-method">
+        <!-- FORM -->
+        <form id="checkoutForm"
+              action="{{ route('checkout') }}"
+              method="POST"
+              class="payment-form">
 
-            <label>
+            @csrf
 
-                Payment Method
+            <!-- CUSTOMER -->
+            <div class="form-group">
 
-            </label>
+                <label>
+                    Customer Name
+                </label>
 
-            <select
-                name="payment_method"
+                <input type="text"
+                       name="customer_name"
+                       class="form-input"
+                       placeholder="Enter customer name..."
+                       required>
 
-                required>
+            </div>
 
-                <option value="cash">
+            <!-- PAYMENT METHOD -->
+            <div class="form-group">
 
-                    Cash
+                <label>
+                    Payment Method
+                </label>
 
-                </option>
+                <select name="payment_method"
+                        class="form-select"
+                        required>
 
-                <option value="qris">
+                    <option value="cash">
+                        Cash
+                    </option>
 
-                    QRIS
+                    <option value="qris">
+                        QRIS
+                    </option>
 
-                </option>
+                    <option value="debit">
+                        Debit Card
+                    </option>
 
-                <option value="debit">
+                </select>
 
-                    Debit
+            </div>
 
-                </option>
+            <!-- TOTAL -->
+            <div class="payment-total">
 
-            </select>
+                <span>
+                    Total Payment
+                </span>
 
-        </div>
+                <strong>
 
-        <!-- TOTAL -->
-        <div class="payment-total">
+                    Rp{{ number_format($total) }}
 
-            <span>
-                Total
-            </span>
+                </strong>
 
-            <strong>
+            </div>
 
-                Rp{{ number_format($total) }}
+            <!-- ACTION -->
+            <div class="payment-actions">
 
-            </strong>
+                <!-- CHECKOUT -->
+                <button type="submit"
+                        class="payment-btn primary">
 
-        </div>
+                    <i class="fa-solid fa-credit-card"></i>
 
-        <!-- CHECKOUT BUTTON -->
-        <button
-            type="submit"
+                    Checkout
 
-            class="checkout-btn">
+                </button>
 
-            <i class="fa-solid fa-credit-card"></i>
+                <!-- QRIS -->
+                <button type="button"
+                        onclick="openQrisModal()"
+                        class="payment-btn secondary">
 
-            Checkout
+                    <i class="fa-solid fa-qrcode"></i>
 
-        </button>
+                    Show QR Code
 
-    </form>
+                </button>
 
-    <!-- QRIS BUTTON -->
-    <button
-        onclick="openQrisModal()"
+            </div>
 
-        class="qris-btn">
+        </form>
 
-        <i class="fa-solid fa-qrcode"></i>
-
-        Show QRIS
-
-    </button>
+    </div>
 
 </div>

@@ -1,124 +1,144 @@
 <!-- CART SECTION -->
-<aside class="cart-section">
+<aside class="cart-wrapper">
 
     <!-- HEADER -->
     <div class="cart-header">
 
-        <div class="cart-title">
+        <div class="cart-header-left">
 
-            <div class="cart-title-left">
+            <div class="cart-icon">
 
                 <i class="fa-solid fa-cart-shopping"></i>
+
+            </div>
+
+            <div>
 
                 <h2>
                     Shopping Cart
                 </h2>
 
+                <p>
+                    {{ count(session('cart', [])) }} item
+                </p>
+
             </div>
 
-            <span class="cart-count">
+        </div>
 
-                {{ count(session('cart', [])) }}
+        <div class="cart-badge">
 
-            </span>
+            {{ count(session('cart', [])) }}
 
         </div>
 
     </div>
 
-    <!-- CART ITEMS -->
+    <!-- ITEMS -->
     <div class="cart-items">
 
         @forelse(session('cart', []) as $id => $item)
 
-            <div class="cart-item">
+            <div class="cart-item-card">
 
-                <!-- PRODUCT IMAGE -->
+                <!-- IMAGE -->
                 <div class="cart-image">
 
-                    <img src="https://via.placeholder.com/80"
+                    <img src="https://via.placeholder.com/100"
                          alt="{{ $item['name'] }}">
 
                 </div>
 
-                <!-- PRODUCT INFO -->
-                <div class="cart-info">
+                <!-- CONTENT -->
+                <div class="cart-content">
 
-                    <!-- PRODUCT NAME -->
-                    <h4 class="cart-product-name">
+                    <!-- INFO -->
+                    <div class="cart-info">
 
-                        {{ $item['name'] }}
+                        <h4 class="cart-product-name">
 
-                    </h4>
+                            {{ $item['name'] }}
 
-                    <!-- PRODUCT PRICE -->
-                    <p class="cart-price">
+                        </h4>
 
-                        Rp{{ number_format($item['price']) }}
+                        <p class="cart-price">
 
-                    </p>
+                            Rp{{ number_format($item['price']) }}
 
-                    <!-- CUSTOMER NOTE -->
-                    <div class="item-note">
-
-                        <textarea
-                            class="note-input"
-
-                            name="notes[{{ $item['id'] }}]"
-
-                            form="checkoutForm"
-
-                            placeholder="Catatan pelanggan..."></textarea>
+                        </p>
 
                     </div>
 
-                    <!-- QTY CONTROL -->
-                    <div class="qty-control">
+                    <!-- NOTE -->
+                    <div class="cart-note">
 
-                        <!-- DECREASE -->
-                        <form action="{{ route('cart.decrease') }}"
-                              method="POST">
+                        <textarea
+                            class="note-input"
+                            name="notes[{{ $item['id'] }}]"
+                            form="checkoutForm"
+                            placeholder="Customer note..."></textarea>
 
-                            @csrf
+                    </div>
 
-                            <input type="hidden"
-                                   name="product_id"
-                                   value="{{ $id }}">
-
-                            <button type="submit"
-                                    class="qty-btn">
-
-                                <i class="fa-solid fa-minus"></i>
-
-                            </button>
-
-                        </form>
+                    <!-- BOTTOM -->
+                    <div class="cart-bottom">
 
                         <!-- QTY -->
-                        <span class="qty-number">
+                        <div class="qty-control">
 
-                            {{ $item['qty'] }}
+                            <!-- DECREASE -->
+                            <form action="{{ route('cart.decrease') }}"
+                                  method="POST">
 
-                        </span>
+                                @csrf
 
-                        <!-- INCREASE -->
-                        <form action="{{ route('cart.increase') }}"
-                              method="POST">
+                                <input type="hidden"
+                                       name="product_id"
+                                       value="{{ $id }}">
 
-                            @csrf
+                                <button type="submit"
+                                        class="qty-btn">
 
-                            <input type="hidden"
-                                   name="product_id"
-                                   value="{{ $id }}">
+                                    <i class="fa-solid fa-minus"></i>
 
-                            <button type="submit"
-                                    class="qty-btn">
+                                </button>
 
-                                <i class="fa-solid fa-plus"></i>
+                            </form>
 
-                            </button>
+                            <!-- QTY -->
+                            <span class="qty-number">
 
-                        </form>
+                                {{ $item['qty'] }}
+
+                            </span>
+
+                            <!-- INCREASE -->
+                            <form action="{{ route('cart.increase') }}"
+                                  method="POST">
+
+                                @csrf
+
+                                <input type="hidden"
+                                       name="product_id"
+                                       value="{{ $id }}">
+
+                                <button type="submit"
+                                        class="qty-btn">
+
+                                    <i class="fa-solid fa-plus"></i>
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                        <!-- SUBTOTAL -->
+                        <div class="cart-subtotal">
+
+                            Rp{{ number_format($item['price'] * $item['qty']) }}
+
+                        </div>
 
                     </div>
 
@@ -128,13 +148,21 @@
 
         @empty
 
-            <!-- EMPTY CART -->
+            <!-- EMPTY -->
             <div class="empty-cart">
 
-                <i class="fa-solid fa-cart-shopping"></i>
+                <div class="empty-cart-icon">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                </div>
+
+                <h3>
+                    Cart is empty
+                </h3>
 
                 <p>
-                    Cart masih kosong
+                    Add menu items to start a new transaction
                 </p>
 
             </div>
@@ -146,7 +174,6 @@
     <!-- FOOTER -->
     <div class="cart-footer">
 
-        <!-- PAYMENT -->
         @include('kasir.partials.payment-box')
 
     </div>

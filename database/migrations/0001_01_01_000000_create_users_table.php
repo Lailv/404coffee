@@ -1,49 +1,127 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Http\Controllers\Customer;
 
-return new class extends Migration
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+
+class CustomerAuthController extends Controller
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    /*
+    |--------------------------------------------------------------------------
+    | LOGIN PAGE
+    |--------------------------------------------------------------------------
+    */
+
+    public function showLogin()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
+        return view('customer.auth.login');
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    /*
+    |--------------------------------------------------------------------------
+    | MANUAL LOGIN
+    |--------------------------------------------------------------------------
+    */
+
+    public function login(Request $request)
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
+        $credentials = $request->validate([
+
+            'email' => ['required', 'email'],
+
+            'password' => ['required'],
+
+        ]);
+
+        if (Auth::attempt($credentials)) {
+
+            $request->session()->regenerate();
+
+            // ROLE CHECK
+            if (auth()->user()->role !== 'customer') {
+
+                Auth::logout();
+
+                return back()->with(
+                    'error',
+                    'Unauthorized access.'
+                );
+            }
+
+            return redirect()
+                ->route('customer.dashboard');
+        }
+
+        return back()->with(
+            'error',
+            'Invalid credentials.'
+        );
     }
-};
+
+    /*
+    |--------------------------------------------------------------------------
+    | GOOGLE REDIRECT
+    |--------------------------------------------------------------------------
+    */
+
+    public function googleRedirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | GOOGLE CALLBACK
+    |--------------------------------------------------------------------------
+    */
+
+    public function googleCallback()
+    {
+        $googleUser = Socialite::driver('google')
+            ->stateless()
+            ->user();
+
+        $user = User::updateOrCreate(
+
+            [
+                'email' => $googleUser->getEmail(),
+            ],
+
+            [
+                'name' => $googleUser->getName(),
+
+                'password' => bcrypt('google-auth'),
+
+                'role' => 'customer',
+            ]
+
+        );
+
+        Auth::login($user);
+
+        return redirect()
+            ->route('customer.dashboard');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGOUT
+    |--------------------------------------------------------------------------
+    */
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()
+            ->route('customer.login');
+    }
+}

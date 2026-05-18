@@ -1,165 +1,176 @@
 <div class="receipt-overlay">
 
-    <div class="receipt-container">
+    <div class="receipt-wrapper">
 
-        <div class="receipt">
+        <div class="receipt-card">
 
             <!-- HEADER -->
             <div class="receipt-header">
 
-                <div class="receipt-logo">
+                <div class="receipt-brand">
 
-                    <i class="fa-solid fa-mug-hot"></i>
+                    <div class="receipt-logo">
 
-                </div>
-
-                <h1>
-                    404.Coffee
-                </h1>
-
-                <p>
-                    ERP POS Receipt
-                </p>
-
-            </div>
-
-            <!-- STORE INFO -->
-            <div class="store-info">
-
-                Bekasi, Indonesia
-                <br>
-
-                support@404coffee.com
-
-            </div>
-
-            <div class="receipt-line"></div>
-
-            <!-- ORDER INFO -->
-            <div class="receipt-info">
-
-                <div class="info-row">
-
-                    <span>
-                        Invoice
-                    </span>
-
-                    <strong>
-
-                        {{ $order->order_number }}
-
-                    </strong>
-
-                </div>
-
-                <div class="info-row">
-
-                    <span>
-                        Customer
-                    </span>
-
-                    <strong>
-
-                        {{ $order->customer_name ?? 'Guest' }}
-
-                    </strong>
-
-                </div>
-
-                <div class="info-row">
-
-                    <span>
-                        Payment
-                    </span>
-
-                    <strong>
-
-                        {{ strtoupper($order->payment_method) }}
-
-                    </strong>
-
-                </div>
-
-                <div class="info-row">
-
-                    <span>
-                        Date
-                    </span>
-
-                    <strong>
-
-                        {{ $order->created_at->format('d M Y H:i') }}
-
-                    </strong>
-
-                </div>
-
-            </div>
-
-            <div class="receipt-line"></div>
-
-            <!-- ITEMS -->
-            <div class="receipt-items">
-
-                @foreach($items as $item)
-
-                    <div class="receipt-item">
-
-                        <div class="item-left">
-
-                            <div class="item-name">
-
-                                {{ $item->product->name ?? '' }}
-
-                            </div>
-
-                            <div class="item-qty">
-
-                                Qty :
-                                {{ $item->qty }}
-
-                            </div>
-
-                            <!-- NOTE -->
-                            @if($item->note)
-
-                                <div class="item-note-text">
-
-                                    Note:
-                                    {{ $item->note }}
-
-                                </div>
-
-                            @endif
-
-                        </div>
-
-                        <div class="item-right">
-
-                            Rp{{ number_format($item->price * $item->qty) }}
-
-                        </div>
+                        <i class="fa-solid fa-mug-hot"></i>
 
                     </div>
 
-                @endforeach
+                    <div>
+
+                        <h1>
+                            404.Coffee
+                        </h1>
+
+                        <p>
+                            ERP POS Receipt
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="receipt-date">
+
+                    {{ $order->created_at->format('d M Y • H:i') }}
+
+                </div>
 
             </div>
 
-            <div class="receipt-line"></div>
+            <!-- STORE -->
+            <div class="receipt-store">
 
-            <!-- TOTAL -->
-            <div class="receipt-total">
+                <p>
+                    Bekasi, Indonesia
+                </p>
 
                 <span>
-                    TOTAL
+                    support@404coffee.com
                 </span>
 
-                <strong>
+            </div>
 
-                    Rp{{ number_format($order->total_amount) }}
+            <!-- INFO -->
+            <div class="receipt-info-grid">
 
-                </strong>
+                <div class="receipt-info-card">
+
+                    <label>
+                        Invoice
+                    </label>
+
+                    <strong>
+                        {{ $order->order_number }}
+                    </strong>
+
+                </div>
+
+                <div class="receipt-info-card">
+
+                    <label>
+                        Customer
+                    </label>
+
+                    <strong>
+                        {{ $order->customer_name ?? 'Guest' }}
+                    </strong>
+
+                </div>
+
+                <div class="receipt-info-card">
+
+                    <label>
+                        Payment
+                    </label>
+
+                    <strong>
+                        {{ strtoupper($order->payment_method) }}
+                    </strong>
+
+                </div>
+
+                <div class="receipt-info-card">
+
+                    <label>
+                        Total
+                    </label>
+
+                    <strong class="total-highlight">
+                        Rp{{ number_format($order->total_amount) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="receipt-table-wrapper">
+
+                <table class="receipt-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Item
+                        </th>
+
+                        <th>
+                            Qty
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    @foreach($items as $item)
+
+                        <tr>
+
+                            <td>
+
+                                <div class="receipt-item-name">
+
+                                    {{ $item->product->name ?? '' }}
+
+                                </div>
+
+                                @if($item->note)
+
+                                    <div class="receipt-note">
+
+                                        {{ $item->note }}
+
+                                    </div>
+
+                                @endif
+
+                            </td>
+
+                            <td>
+                                {{ $item->qty }}
+                            </td>
+
+                            <td>
+
+                                Rp{{ number_format($item->price * $item->qty) }}
+
+                            </td>
+
+                        </tr>
+
+                    @endforeach
+
+                    </tbody>
+
+                </table>
 
             </div>
 
@@ -167,33 +178,33 @@
             <div class="receipt-footer">
 
                 <p>
-                    Thank you for visiting ☕
+                    Thank you for visiting 404.Coffee
                 </p>
 
                 <span>
-                    404.Coffee ERP System
+                    ERP Management System
                 </span>
 
             </div>
 
-            <!-- ACTION -->
+            <!-- ACTIONS -->
             <div class="receipt-actions">
 
                 <!-- PRINT -->
                 <button
                     onclick="window.print()"
-                    class="print-btn">
+                    class="receipt-btn primary">
 
                     <i class="fa-solid fa-print"></i>
 
-                    Print Receipt
+                    Print
 
                 </button>
 
-                <!-- SAVE PDF -->
+                <!-- SAVE -->
                 <button
                     onclick="window.print()"
-                    class="save-btn">
+                    class="receipt-btn secondary">
 
                     <i class="fa-solid fa-download"></i>
 
@@ -203,7 +214,7 @@
 
                 <!-- CLOSE -->
                 <a href="{{ route('pos') }}"
-                   class="back-btn">
+                   class="receipt-btn danger">
 
                     <i class="fa-solid fa-xmark"></i>
 

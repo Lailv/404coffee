@@ -1,0 +1,510 @@
+/* ============================================================
+   404 Coffee Admin — Attendance CSS
+   Synced with Dashboard + HR + Finance Ecosystem
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   ROOT
+   ============================================================ */
+
+:root {
+
+    --bg: #f5f7fb;
+
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+
+    --border: #e2e8f0;
+    --border-soft: #edf2f7;
+
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+
+    --red: #dc2626;
+    --red-light: #fff1f2;
+
+    --amber: #d97706;
+    --amber-light: #fffbeb;
+
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+
+    --shadow-sm:
+        0 1px 2px rgba(15,23,42,0.04),
+        0 1px 3px rgba(15,23,42,0.08);
+
+    --shadow-md:
+        0 10px 20px rgba(15,23,42,0.06),
+        0 3px 6px rgba(15,23,42,0.04);
+
+    --ease:
+        cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   BODY
+   ============================================================ */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+}
+
+/* ============================================================
+   PAGE
+   ============================================================ */
+
+.attendance-page {
+    padding: 2rem;
+    animation: fadeUp .4s var(--ease);
+}
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.attendance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 1.8rem;
+}
+
+.attendance-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+
+    letter-spacing: -.5px;
+}
+
+.attendance-header p {
+    margin-top: 5px;
+
+    font-size: 13px;
+
+    color: var(--text-secondary);
+}
+
+.attendance-badge {
+    padding: 10px 14px;
+
+    background: var(--blue-light);
+
+    border: 1px solid #bfdbfe;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--blue);
+}
+
+/* ============================================================
+   ALERT
+   ============================================================ */
+
+.alert {
+    padding: 14px 16px;
+
+    border-radius: var(--radius-md);
+
+    margin-bottom: 1rem;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.success-alert {
+    background: var(--green-light);
+    border: 1px solid #bbf7d0;
+    color: var(--green);
+}
+
+.error-alert {
+    background: var(--red-light);
+    border: 1px solid #fecdd3;
+    color: var(--red);
+}
+
+/* ============================================================
+   STATS
+   ============================================================ */
+
+.attendance-stats {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
+
+    gap: 16px;
+
+    margin-bottom: 1.5rem;
+}
+
+.stats-card {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    padding: 1.4rem;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform .2s ease,
+        box-shadow .25s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.stats-card span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+
+    color: var(--text-muted);
+}
+
+.stats-card h2 {
+    font-size: 28px;
+    font-weight: 600;
+
+    letter-spacing: -.5px;
+}
+
+/* ============================================================
+   CARD
+   ============================================================ */
+
+.attendance-card {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    padding: 1.5rem;
+
+    margin-bottom: 1.5rem;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform .2s ease,
+        box-shadow .25s ease;
+}
+
+.attendance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ============================================================
+   CARD HEADER
+   ============================================================ */
+
+.card-header {
+    margin-bottom: 1.2rem;
+}
+
+.card-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ============================================================
+   FORM
+   ============================================================ */
+
+.attendance-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.attendance-form input {
+    flex: 1;
+
+    height: 48px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
+
+    padding: 0 15px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition:
+        border .2s ease,
+        box-shadow .2s ease;
+}
+
+.attendance-form input:focus {
+    border-color: var(--blue);
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,0.08);
+}
+
+.attendance-form button {
+    height: 48px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    background: var(--blue);
+
+    color: white;
+
+    border-radius: var(--radius-md);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .25s ease;
+}
+
+.attendance-form button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 20px rgba(37,99,235,0.18);
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead tr {
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    padding: 12px 14px;
+
+    text-align: left;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: .06em;
+    text-transform: uppercase;
+
+    color: var(--text-muted);
+}
+
+td {
+    padding: 14px;
+
+    border-bottom: 1px solid var(--border-soft);
+
+    font-size: 13px;
+
+    color: var(--text-primary);
+
+    transition: background .15s ease;
+}
+
+tbody tr:hover td {
+    background: var(--surface-2);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ============================================================
+   EMPLOYEE
+   ============================================================ */
+
+.employee-name {
+    font-weight: 500;
+}
+
+/* ============================================================
+   STATUS BADGE
+   ============================================================ */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-badge.present {
+    background: var(--green-light);
+    color: var(--green);
+}
+
+.status-badge.late {
+    background: var(--amber-light);
+    color: var(--amber);
+}
+
+.status-badge.absent {
+    background: var(--red-light);
+    color: var(--red);
+}
+
+/* ============================================================
+   EMPTY
+   ============================================================ */
+
+.empty-data {
+    text-align: center;
+
+    padding: 20px;
+
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 860px) {
+
+    .attendance-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+}
+
+@media (max-width: 680px) {
+
+    .attendance-page {
+        padding: 1rem;
+    }
+
+    .attendance-form {
+        flex-direction: column;
+    }
+
+    .attendance-form button {
+        width: 100%;
+    }
+
+    th,
+    td {
+        white-space: nowrap;
+    }
+
+}
+
+/* ============================================================
+   HR NAVIGATION
+   ============================================================ */
+
+.hr-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 1.5rem;
+}
+
+.hr-tab {
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    color: var(--text-secondary);
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        .2s ease;
+}
+
+.hr-tab:hover {
+    background: var(--surface-2);
+}
+
+.hr-tab.active {
+    background: var(--blue);
+
+    border-color: var(--blue);
+
+    color: white;
+}

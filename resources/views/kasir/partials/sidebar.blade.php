@@ -1,14 +1,39 @@
-<!-- SIDEBAR NAVIGATION -->
+<!-- SIDEBAR -->
 <aside class="sidebar">
+
+    <!-- LOGO -->
+    <div class="sidebar-logo">
+
+        <h2>
+            404.COFFEE
+        </h2>
+
+        <span>
+            POS SYSTEM
+        </span>
+
+    </div>
 
     <!-- USER -->
     <div class="user-profile">
 
-        <i class="fa-solid fa-circle-user"></i>
+        <div class="user-avatar">
 
-        <span>
-            {{ auth()->user()->name }}
-        </span>
+            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+
+        </div>
+
+        <div class="user-info">
+
+            <h4>
+                {{ auth()->user()->name }}
+            </h4>
+
+            <p>
+                Cashier
+            </p>
+
+        </div>
 
     </div>
 
@@ -21,7 +46,9 @@
 
             <i class="fa-solid fa-border-all"></i>
 
-            All Menu
+            <span>
+                All Menu
+            </span>
 
         </a>
 
@@ -31,7 +58,9 @@
 
             <i class="fa-solid fa-mug-hot"></i>
 
-            Coffee
+            <span>
+                Coffee
+            </span>
 
         </a>
 
@@ -41,7 +70,9 @@
 
             <i class="fa-solid fa-glass-water"></i>
 
-            Drink
+            <span>
+                Drink
+            </span>
 
         </a>
 
@@ -51,28 +82,30 @@
 
             <i class="fa-solid fa-burger"></i>
 
-            Food
+            <span>
+                Food
+            </span>
 
         </a>
 
     </nav>
 
-    <!-- LOGOUT -->
+    <!-- FOOTER -->
     <div class="sidebar-footer">
 
-        <form
-            action="{{ route('logout') }}"
-            method="POST">
+        <form action="{{ route('logout') }}"
+              method="POST">
 
             @csrf
 
-            <button
-                type="submit"
-                class="logout-btn">
+            <button type="submit"
+                    class="logout-btn">
 
                 <i class="fa-solid fa-right-from-bracket"></i>
 
-                Logout
+                <span>
+                    Logout
+                </span>
 
             </button>
 

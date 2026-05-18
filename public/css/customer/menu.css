@@ -1,0 +1,183 @@
+/* =========================================
+   MENU PAGE
+========================================= */
+
+.customer-menu {
+    width: 100%;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.menu-header {
+    margin-bottom: 50px;
+}
+
+.menu-header h1 {
+    font-size: 40px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 12px;
+}
+
+.menu-header p {
+    font-size: 16px;
+    color: #6b7280;
+}
+
+/* =========================================
+   SECTION
+========================================= */
+
+.menu-section {
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 24px;
+}
+
+/* =========================================
+   GRID
+========================================= */
+
+.menu-grid {
+    display: grid;
+
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(260px, 1fr)
+    );
+
+    gap: 24px;
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.menu-card {
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    border: 1px solid #e5e7eb;
+
+    padding: 24px;
+
+    transition: 0.3s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.menu-category {
+    display: inline-block;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    margin-bottom: 16px;
+}
+
+.menu-content h3 {
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: #111827;
+
+    margin-bottom: 12px;
+}
+
+.menu-price {
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #2563eb;
+
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.menu-btn {
+    width: 100%;
+
+    border: none;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.menu-btn:hover {
+    background: #1d4ed8;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-menu {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 20px;
+
+    padding: 40px;
+
+    text-align: center;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .menu-header h1 {
+        font-size: 32px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+}

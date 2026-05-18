@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\RecipeController;
 use App\Http\Controllers\Admin\RestockController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\AttendanceController;
 
 
 // ======================================================
@@ -174,3 +176,61 @@ Route::post(
     [RecipeController::class, 'storeProduct']
 
 )->name('admin.products.store');
+
+// =========================
+// EMPLOYEES
+// =========================
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+
+        Route::get(
+
+            '/employees',
+
+            [EmployeeController::class, 'index']
+
+        )->name('admin.employees');
+
+        Route::post(
+
+            '/employees/store',
+
+            [EmployeeController::class, 'store']
+
+        )->name('admin.employees.store');
+
+        Route::put(
+
+            '/employees/{employee}',
+
+            [EmployeeController::class, 'update']
+
+        )->name('admin.employees.update');
+
+    });
+
+// =========================
+// ATTENDANCE
+// =========================
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+
+        Route::get(
+
+            '/attendance',
+
+            [AttendanceController::class, 'index']
+
+        )->name('admin.attendance');
+
+        Route::post(
+
+            '/attendance/check-in',
+
+            [AttendanceController::class, 'checkIn']
+
+        )->name('admin.attendance.checkin');
+
+    });

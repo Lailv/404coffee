@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
 
@@ -9,10 +9,10 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>
-        Kitchen Display
+        404 Coffee Kitchen
     </title>
 
-    <!-- FONT -->
+    <!-- GOOGLE FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet">
 
@@ -28,22 +28,41 @@
 
 <body>
 
-<div class="kitchen-container">
+<div class="kitchen-layout">
 
     <!-- HEADER -->
-    <div class="kitchen-header">
+    <header class="kitchen-header">
 
-        <h1>
+        <div class="kitchen-header-left">
 
-            <i class="fa-solid fa-utensils"></i>
+            <div class="kitchen-icon">
 
-            Kitchen Display
+                <i class="fa-solid fa-utensils"></i>
 
-        </h1>
+            </div>
 
-        <span id="kitchen-clock"></span>
+            <div>
 
-    </div>
+                <h1>
+                    Kitchen Display
+                </h1>
+
+                <p>
+                    Monitor and process customer orders
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- CLOCK -->
+        <div class="kitchen-clock-wrapper">
+
+            <span id="kitchen-clock"></span>
+
+        </div>
+
+    </header>
 
     <!-- ORDERS -->
     <div class="orders-grid">
@@ -57,29 +76,30 @@
 
                     <div>
 
-                        <h2>
+                        <div class="invoice-badge">
 
                             {{ $order->order_number }}
 
+                        </div>
+
+                        <h2>
+
+                            {{ $order->customer_name ?? 'Guest' }}
+
                         </h2>
-
-                        <p>
-
-                            {{ $order->customer_name }}
-
-                        </p>
 
                         <p class="order-time">
 
-                            🕐 {{ $order->created_at->diffForHumans() }}
+                            {{ $order->created_at->diffForHumans() }}
 
                         </p>
 
                     </div>
 
+                    <!-- STATUS -->
                     <div class="order-status">
 
-                        PENDING
+                        Pending
 
                     </div>
 
@@ -92,7 +112,7 @@
 
                         <div class="kitchen-item">
 
-                            <div>
+                            <div class="item-info">
 
                                 <strong>
 
@@ -100,11 +120,11 @@
 
                                 </strong>
 
-                                <p>
+                                <span>
 
-                                    Qty: {{ $item->qty }}
+                                    Qty {{ $item->qty }}
 
-                                </p>
+                                </span>
 
                                 @if($item->note)
 
@@ -124,29 +144,46 @@
 
                 </div>
 
-                <!-- DONE BUTTON -->
-                <form action="{{ route('kitchen.done', $order->id) }}"
-                      method="POST">
+                <!-- FOOTER -->
+                <div class="order-footer">
 
-                    @csrf
+                    <form action="{{ route('kitchen.done', $order->id) }}"
+                          method="POST">
 
-                    <button class="done-btn">
+                        @csrf
 
-                        <i class="fa-solid fa-check"></i>
+                        <button class="done-btn">
 
-                        DONE
+                            <i class="fa-solid fa-check"></i>
 
-                    </button>
+                            Mark as Done
 
-                </form>
+                        </button>
+
+                    </form>
+
+                </div>
 
             </div>
 
         @empty
 
+            <!-- EMPTY -->
             <div class="empty-order">
 
-                Tidak ada order pending ☕
+                <div class="empty-icon">
+
+                    <i class="fa-solid fa-mug-hot"></i>
+
+                </div>
+
+                <h3>
+                    No pending orders
+                </h3>
+
+                <p>
+                    All orders have been completed
+                </p>
 
             </div>
 
@@ -157,9 +194,8 @@
 </div>
 
 <!-- AUDIO -->
-<audio
-    id="notifSound"
-    src="{{ asset('sounds/ding.mp3') }}">
+<audio id="notifSound"
+       src="{{ asset('sounds/ding.mp3') }}">
 </audio>
 
 <!-- JS -->
