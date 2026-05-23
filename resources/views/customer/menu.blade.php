@@ -61,11 +61,19 @@
 
                         </p>
 
-                        <button class="menu-btn">
+                        <form action="{{ route('customer.cart.add', $product->id) }}"
+                              method="POST">
 
-                            Add to Cart
+                            @csrf
 
-                        </button>
+                            <button type="submit"
+                                    class="menu-btn">
+
+                                Add to Cart
+
+                            </button>
+
+                        </form>
 
                     </div>
 
@@ -123,11 +131,19 @@
 
                         </p>
 
-                        <button class="menu-btn">
+                        <form action="{{ route('customer.cart.add', $product->id) }}"
+                              method="POST">
 
-                            Add to Cart
+                            @csrf
 
-                        </button>
+                            <button type="submit"
+                                    class="menu-btn">
+
+                                Add to Cart
+
+                            </button>
+
+                        </form>
 
                     </div>
 
@@ -185,11 +201,19 @@
 
                         </p>
 
-                        <button class="menu-btn">
+                        <form action="{{ route('customer.cart.add', $product->id) }}"
+                              method="POST">
 
-                            Add to Cart
+                            @csrf
 
-                        </button>
+                            <button type="submit"
+                                    class="menu-btn">
+
+                                Add to Cart
+
+                            </button>
+
+                        </form>
 
                     </div>
 

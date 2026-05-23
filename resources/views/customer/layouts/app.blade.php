@@ -67,23 +67,23 @@
                     </a>
 
                     <a href="{{ route('customer.menu') }}"
-   class="nav-link">
-
-    Menu
-
-</a>
-
-                    <a href="#"
                        class="nav-link">
 
-                        Orders
+                        Menu
 
                     </a>
 
-                    <a href="#"
+                    <a href="{{ route('customer.cart') }}"
                        class="nav-link">
 
-                        Profile
+                        Cart
+
+                    </a>
+
+                    <a href="{{ route('customer.about') }}"
+                       class="nav-link">
+
+                        About
 
                     </a>
 
@@ -93,6 +93,29 @@
 
             <!-- RIGHT -->
             <div class="navbar-right">
+
+                <!-- CART -->
+                <a href="{{ route('customer.cart') }}"
+                   class="cart-icon">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    @php
+                        $cart = session('cart', []);
+                        $cartCount = count($cart);
+                    @endphp
+
+                    @if($cartCount > 0)
+
+                        <span class="cart-badge">
+
+                            {{ $cartCount }}
+
+                        </span>
+
+                    @endif
+
+                </a>
 
                 <!-- USER -->
                 <div class="navbar-user">
@@ -107,7 +130,7 @@
 
                         <span class="user-label">
 
-                            Signed in as
+                            {{ auth()->check() ? 'Signed in as' : 'Guest User' }}
 
                         </span>
 
@@ -199,6 +222,8 @@
         </div>
 
     </footer>
+
+    @stack('scripts')
 
 </body>
 

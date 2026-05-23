@@ -47,18 +47,27 @@ class CustomerAuthController extends Controller
                 Auth::logout();
 
                 return back()->with(
+
                     'error',
+
                     'Unauthorized access.'
+
                 );
             }
 
-            return redirect()
-                ->route('customer.home');
+            return redirect()->intended(
+
+                route('customer.home')
+
+            );
         }
 
         return back()->with(
+
             'error',
+
             'Invalid credentials.'
+
         );
     }
 
@@ -103,8 +112,11 @@ class CustomerAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()
-            ->route('customer.home');
+        return redirect()->intended(
+
+            route('customer.home')
+
+        );
     }
 
     /*

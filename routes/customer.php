@@ -43,6 +43,62 @@ Route::prefix('customer')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
+    | ABOUT
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+
+        '/about',
+
+        function () {
+
+            return view('customer.about');
+
+        }
+
+    )->name('customer.about');
+
+    /*
+    |--------------------------------------------------------------------------
+    | CART
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+
+        '/cart',
+
+        [CustomerController::class, 'cart']
+
+    )->name('customer.cart');
+
+    Route::post(
+
+        '/cart/add/{product}',
+
+        [CustomerController::class, 'addToCart']
+
+    )->name('customer.cart.add');
+
+    Route::post(
+
+        '/cart/update/{id}',
+
+        [CustomerController::class, 'updateCart']
+
+    )->name('customer.cart.update');
+
+    Route::delete(
+
+        '/cart/remove/{id}',
+
+        [CustomerController::class, 'removeCart']
+
+    )->name('customer.cart.remove');
+
+    /*
+    |--------------------------------------------------------------------------
     | AUTH
     |--------------------------------------------------------------------------
     */
@@ -62,12 +118,6 @@ Route::prefix('customer')->group(function () {
         [CustomerAuthController::class, 'login']
 
     )->name('customer.login.submit');
-
-    /*
-    |--------------------------------------------------------------------------
-    | GOOGLE LOGIN
-    |--------------------------------------------------------------------------
-    */
 
     Route::get(
 
@@ -92,6 +142,22 @@ Route::prefix('customer')->group(function () {
     */
 
     Route::middleware('customer')->group(function () {
+
+        Route::get(
+
+            '/checkout',
+
+            [CustomerController::class, 'checkout']
+
+        )->name('customer.checkout');
+
+        Route::post(
+
+            '/checkout',
+
+            [CustomerController::class, 'storeOrder']
+
+        )->name('customer.checkout.store');
 
         Route::post(
 
