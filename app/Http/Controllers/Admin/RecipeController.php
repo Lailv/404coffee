@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\Inventory;
 use App\Models\Recipe;
 
+use Illuminate\Support\Facades\Storage;
+
 class RecipeController
 extends Controller
 {
@@ -65,7 +67,7 @@ extends Controller
         // =========================
         // GROUPED RECIPES
         // =========================
-       $recipeGroups = Product::latest()->get();
+        $recipeGroups = Product::latest()->get();
 
 
         return view(
@@ -102,10 +104,28 @@ extends Controller
 
             'category_id' => 'required',
 
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+
         ]);
 
 
-        Product::create([
+        // =========================
+        // IMAGE
+        // =========================
+        $image = null;
+
+        if ($request->hasFile('image')) {
+
+            $image = $request
+                ->file('image')
+                ->store('products', 'public');
+        }
+
+
+        // =========================
+        // CREATE PRODUCT
+        // =========================
+        $product = Product::create([
 
             'name' =>
 
@@ -119,7 +139,56 @@ extends Controller
 
                 $request->category_id,
 
+            'image' =>
+
+                $image,
+
         ]);
+
+
+        // =========================
+        // CREATE RECIPES
+        // =========================
+        if (
+
+            $request->inventory_id
+
+        ) {
+
+            foreach (
+
+                $request->inventory_id
+
+                as $index => $inventoryId
+
+            ) {
+
+                if (
+
+                    !empty(
+                        $request->quantity[$index]
+                    )
+
+                ) {
+
+                    Recipe::create([
+
+                        'product_id' =>
+
+                            $product->id,
+
+                        'inventory_id' =>
+
+                            $inventoryId,
+
+                        'quantity' =>
+
+                            $request->quantity[$index]
+
+                    ]);
+                }
+            }
+        }
 
 
         return redirect()
@@ -131,6 +200,75 @@ extends Controller
                 'success',
 
                 'Menu berhasil ditambahkan'
+
+            );
+    }
+
+
+    // =========================
+    // UPDATE PRODUCT
+    // =========================
+    public function updateProduct(
+        Request $request,
+        $id
+    )
+    {
+        $product = Product::findOrFail($id);
+
+        $request->validate([
+
+            'name' => 'required',
+
+            'price' => 'required|numeric',
+
+            'category_id' => 'required',
+
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+
+        ]);
+
+
+        // =========================
+        // UPDATE IMAGE
+        // =========================
+        if ($request->hasFile('image')) {
+
+            // DELETE OLD
+            if ($product->image) {
+
+                Storage::disk('public')
+                    ->delete($product->image);
+            }
+
+            $image = $request
+                ->file('image')
+                ->store('products', 'public');
+
+            $product->image = $image;
+        }
+
+
+        // =========================
+        // UPDATE DATA
+        // =========================
+        $product->name = $request->name;
+
+        $product->price = $request->price;
+
+        $product->category_id = $request->category_id;
+
+        $product->save();
+
+
+        return redirect()
+
+            ->back()
+
+            ->with(
+
+                'success',
+
+                'Menu berhasil diupdate'
 
             );
     }
@@ -236,39 +374,48 @@ extends Controller
     // DELETE RECIPE
     // =========================
     public function deleteRecipe(
-    $productId
-)
-{
-    // DELETE RECIPES
-    Recipe::where(
-
-        'product_id',
-
         $productId
+    )
+    {
+        $product = Product::find($productId);
 
-    )->delete();
+        // DELETE IMAGE
+        if ($product && $product->image) {
+
+            Storage::disk('public')
+                ->delete($product->image);
+        }
+
+        // DELETE RECIPES
+        Recipe::where(
+
+            'product_id',
+
+            $productId
+
+        )->delete();
 
 
-    // DELETE PRODUCT
-    Product::where(
+        // DELETE PRODUCT
+        Product::where(
 
-        'id',
+            'id',
 
-        $productId
+            $productId
 
-    )->delete();
+        )->delete();
 
 
-    return redirect()
+        return redirect()
 
-        ->back()
+            ->back()
 
-        ->with(
+            ->with(
 
-            'success',
+                'success',
 
-            'Menu berhasil dihapus'
+                'Menu berhasil dihapus'
 
-        );
-}
+            );
+    }
 }

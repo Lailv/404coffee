@@ -62,8 +62,19 @@
                 <!-- IMAGE -->
                 <div class="card-image">
 
-                    <img src="https://via.placeholder.com/300x200"
-                         alt="{{ $product->name }}">
+                    @if($product->image)
+
+                        <img
+                            src="{{ asset('storage/' . $product->image) }}"
+                            alt="{{ $product->name }}">
+
+                    @else
+
+                        <img
+                            src="https://via.placeholder.com/300x200"
+                            alt="{{ $product->name }}">
+
+                    @endif
 
                 </div>
 

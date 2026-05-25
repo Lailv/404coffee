@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\RestockController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\CustomerController;
 
 
 // ======================================================
@@ -97,6 +98,18 @@ Route::post(
 )->name('admin.products.store');
 
 
+// UPDATE PRODUCT
+Route::match(
+
+    ['post', 'put'],
+
+    '/admin/products/update/{id}',
+
+    [RecipeController::class, 'updateProduct']
+
+)->name('admin.products.update');
+
+
 // DELETE RECIPE
 Route::delete(
 
@@ -168,14 +181,6 @@ Route::post(
 
 )->name('admin.supplier.store');
 
-// STORE PRODUCT
-Route::post(
-
-    '/admin/products/store',
-
-    [RecipeController::class, 'storeProduct']
-
-)->name('admin.products.store');
 
 // =========================
 // EMPLOYEES
@@ -210,6 +215,7 @@ Route::prefix('admin')
 
     });
 
+
 // =========================
 // ATTENDANCE
 // =========================
@@ -234,3 +240,19 @@ Route::prefix('admin')
         )->name('admin.attendance.checkin');
 
     });
+
+
+// =========================
+// CUSTOMERS
+// =========================
+Route::middleware(['auth'])->group(function () {
+
+    Route::get(
+
+        '/admin/customers',
+
+        [CustomerController::class, 'index']
+
+    )->name('admin.customers');
+
+});

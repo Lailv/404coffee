@@ -55,6 +55,14 @@
 
             <div class="recipe-group">
 
+                @if($group->image)
+
+                    <img
+                        src="{{ asset('storage/' . $group->image) }}"
+                        class="recipe-image">
+
+                @endif
+
                 <!-- CARD HEADER -->
                 <div class="recipe-group-header">
 
@@ -231,7 +239,8 @@
         <!-- FORM -->
         <form
             action="{{ route('admin.products.store') }}"
-            method="POST">
+            method="POST"
+            enctype="multipart/form-data">
 
             @csrf
 
@@ -260,6 +269,20 @@
                     type="number"
                     name="price"
                     required>
+
+            </div>
+
+            <!-- IMAGE -->
+            <div class="form-group">
+
+                <label>
+                    Menu Image
+                </label>
+
+                <input
+                    type="file"
+                    name="image"
+                    accept="image/*">
 
             </div>
 
@@ -405,13 +428,14 @@
 
         </div>
 
-        <!-- FORM -->
-        <form
-            id="editMenuForm"
-            method="POST">
+   <form
+    id="editMenuForm"
+    action=""
+    method="POST"
+    enctype="multipart/form-data">
 
-            @csrf
-            @method('PUT')
+    @csrf
+            
 
             <!-- MENU -->
             <div class="form-group">
@@ -440,6 +464,20 @@
                     name="price"
                     id="edit_price"
                     required>
+
+            </div>
+
+            <!-- IMAGE -->
+            <div class="form-group">
+
+                <label>
+                    Change Image
+                </label>
+
+                <input
+                    type="file"
+                    name="image"
+                    accept="image/*">
 
             </div>
 

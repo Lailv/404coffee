@@ -13,27 +13,56 @@
 
 <div class="customer-menu">
 
-    <div class="menu-header">
+    {{-- ===================================================== --}}
+    {{-- HERO --}}
+    {{-- ===================================================== --}}
+    <section class="menu-hero">
 
-        <h1>
-            Our Menu
-        </h1>
+        <div class="menu-hero-inner">
 
-        <p>
-            Explore premium coffee and foods from 404.Coffee.
-        </p>
+            <span class="menu-eyebrow">
 
-    </div>
+                <span class="eyebrow-dot"></span>
 
-    <!-- =========================================
-         COFFEE
-    ========================================== -->
+                Crafted Daily • Premium Selection
 
-    <div class="menu-section">
+            </span>
 
-        <h2 class="section-title">
-            Coffee
-        </h2>
+            <h1 class="menu-title">
+
+                Discover Our
+                <em>Signature Menu</em>
+
+            </h1>
+
+            <p class="menu-desc">
+
+                Carefully crafted coffee, refreshing drinks,
+                and delicious foods designed to elevate
+                your coffee experience.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    {{-- ===================================================== --}}
+    {{-- COFFEE --}}
+    {{-- ===================================================== --}}
+    <section class="menu-section">
+
+        <div class="section-heading">
+
+            <span class="section-badge">
+                Fresh Brewed
+            </span>
+
+            <h2 class="section-title">
+                Coffee Selection
+            </h2>
+
+        </div>
 
         <div class="menu-grid">
 
@@ -41,7 +70,28 @@
 
                 <div class="menu-card">
 
-                    <div class="menu-content">
+                    <div class="menu-card-glow"></div>
+
+                    {{-- IMAGE --}}
+                    <div class="menu-image">
+
+                        @if($product->image)
+
+                            <img
+                                src="{{ asset('storage/' . $product->image) }}"
+                                alt="{{ $product->name }}">
+
+                        @else
+
+                            <img
+                                src="https://via.placeholder.com/400x300"
+                                alt="{{ $product->name }}">
+
+                        @endif
+
+                    </div>
+
+                    <div class="menu-top">
 
                         <span class="menu-category">
 
@@ -49,31 +99,52 @@
 
                         </span>
 
+                        <span class="menu-badge">
+
+                            Popular
+
+                        </span>
+
+                    </div>
+
+                    <div class="menu-content">
+
                         <h3>
 
                             {{ $product->name }}
 
                         </h3>
 
-                        <p class="menu-price">
+                        <p class="menu-description">
 
-                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                            Premium handcrafted drink made
+                            with selected ingredients.
 
                         </p>
 
-                        <form action="{{ route('customer.cart.add', $product->id) }}"
-                              method="POST">
+                        <div class="menu-footer">
 
-                            @csrf
+                            <div class="menu-price">
 
-                            <button type="submit"
-                                    class="menu-btn">
+                                Rp {{ number_format($product->price, 0, ',', '.') }}
 
-                                Add to Cart
+                            </div>
 
-                            </button>
+                            <form action="{{ route('customer.cart.add', $product->id) }}"
+                                  method="POST">
 
-                        </form>
+                                @csrf
+
+                                <button type="submit"
+                                        class="menu-btn">
+
+                                    <i class="fa-solid fa-plus"></i>
+
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     </div>
 
@@ -93,17 +164,24 @@
 
         </div>
 
-    </div>
+    </section>
 
-    <!-- =========================================
-         NON COFFEE
-    ========================================== -->
+    {{-- ===================================================== --}}
+    {{-- NON COFFEE --}}
+    {{-- ===================================================== --}}
+    <section class="menu-section">
 
-    <div class="menu-section">
+        <div class="section-heading">
 
-        <h2 class="section-title">
-            Non Coffee
-        </h2>
+            <span class="section-badge">
+                Refreshing Taste
+            </span>
+
+            <h2 class="section-title">
+                Non Coffee
+            </h2>
+
+        </div>
 
         <div class="menu-grid">
 
@@ -111,7 +189,28 @@
 
                 <div class="menu-card">
 
-                    <div class="menu-content">
+                    <div class="menu-card-glow"></div>
+
+                    {{-- IMAGE --}}
+                    <div class="menu-image">
+
+                        @if($product->image)
+
+                            <img
+                                src="{{ asset('storage/' . $product->image) }}"
+                                alt="{{ $product->name }}">
+
+                        @else
+
+                            <img
+                                src="https://via.placeholder.com/400x300"
+                                alt="{{ $product->name }}">
+
+                        @endif
+
+                    </div>
+
+                    <div class="menu-top">
 
                         <span class="menu-category">
 
@@ -119,31 +218,52 @@
 
                         </span>
 
+                        <span class="menu-badge menu-badge--soft">
+
+                            Fresh
+
+                        </span>
+
+                    </div>
+
+                    <div class="menu-content">
+
                         <h3>
 
                             {{ $product->name }}
 
                         </h3>
 
-                        <p class="menu-price">
+                        <p class="menu-description">
 
-                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                            Smooth and refreshing drinks
+                            perfect for every moment.
 
                         </p>
 
-                        <form action="{{ route('customer.cart.add', $product->id) }}"
-                              method="POST">
+                        <div class="menu-footer">
 
-                            @csrf
+                            <div class="menu-price">
 
-                            <button type="submit"
-                                    class="menu-btn">
+                                Rp {{ number_format($product->price, 0, ',', '.') }}
 
-                                Add to Cart
+                            </div>
 
-                            </button>
+                            <form action="{{ route('customer.cart.add', $product->id) }}"
+                                  method="POST">
 
-                        </form>
+                                @csrf
+
+                                <button type="submit"
+                                        class="menu-btn">
+
+                                    <i class="fa-solid fa-plus"></i>
+
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     </div>
 
@@ -163,17 +283,24 @@
 
         </div>
 
-    </div>
+    </section>
 
-    <!-- =========================================
-         FOOD
-    ========================================== -->
+    {{-- ===================================================== --}}
+    {{-- FOOD --}}
+    {{-- ===================================================== --}}
+    <section class="menu-section">
 
-    <div class="menu-section">
+        <div class="section-heading">
 
-        <h2 class="section-title">
-            Food
-        </h2>
+            <span class="section-badge">
+                Kitchen Special
+            </span>
+
+            <h2 class="section-title">
+                Fresh Food
+            </h2>
+
+        </div>
 
         <div class="menu-grid">
 
@@ -181,7 +308,28 @@
 
                 <div class="menu-card">
 
-                    <div class="menu-content">
+                    <div class="menu-card-glow"></div>
+
+                    {{-- IMAGE --}}
+                    <div class="menu-image">
+
+                        @if($product->image)
+
+                            <img
+                                src="{{ asset('storage/' . $product->image) }}"
+                                alt="{{ $product->name }}">
+
+                        @else
+
+                            <img
+                                src="https://via.placeholder.com/400x300"
+                                alt="{{ $product->name }}">
+
+                        @endif
+
+                    </div>
+
+                    <div class="menu-top">
 
                         <span class="menu-category">
 
@@ -189,31 +337,52 @@
 
                         </span>
 
+                        <span class="menu-badge menu-badge--food">
+
+                            Chef Choice
+
+                        </span>
+
+                    </div>
+
+                    <div class="menu-content">
+
                         <h3>
 
                             {{ $product->name }}
 
                         </h3>
 
-                        <p class="menu-price">
+                        <p class="menu-description">
 
-                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                            Delicious dishes prepared fresh
+                            directly from our kitchen.
 
                         </p>
 
-                        <form action="{{ route('customer.cart.add', $product->id) }}"
-                              method="POST">
+                        <div class="menu-footer">
 
-                            @csrf
+                            <div class="menu-price">
 
-                            <button type="submit"
-                                    class="menu-btn">
+                                Rp {{ number_format($product->price, 0, ',', '.') }}
 
-                                Add to Cart
+                            </div>
 
-                            </button>
+                            <form action="{{ route('customer.cart.add', $product->id) }}"
+                                  method="POST">
 
-                        </form>
+                                @csrf
+
+                                <button type="submit"
+                                        class="menu-btn">
+
+                                    <i class="fa-solid fa-plus"></i>
+
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     </div>
 
@@ -233,7 +402,7 @@
 
         </div>
 
-    </div>
+    </section>
 
 </div>
 

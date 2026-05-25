@@ -21,23 +21,48 @@
 
 <div class="customer-cart">
 
-    <div class="cart-header">
+    {{-- ===================================================== --}}
+    {{-- HERO --}}
+    {{-- ===================================================== --}}
+    <section class="cart-hero">
 
-        <h1>
-            Your Cart
-        </h1>
+        <div class="cart-hero-inner">
 
-        <p>
-            Review your selected items before checkout.
-        </p>
+            <span class="cart-eyebrow">
 
-    </div>
+                <span class="eyebrow-dot"></span>
 
+                Your Selected Experience
+
+            </span>
+
+            <h1 class="cart-title">
+
+                Your
+                <em>Coffee Cart</em>
+
+            </h1>
+
+            <p class="cart-desc">
+
+                Review your selected items before
+                continuing to checkout and enjoy
+                the perfect coffee experience.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    {{-- ===================================================== --}}
+    {{-- CART --}}
+    {{-- ===================================================== --}}
     @if(count($cart) > 0)
 
-        <div class="cart-container">
+        <div class="cart-layout">
 
-            <!-- CART ITEMS -->
+            {{-- ITEMS --}}
             <div class="cart-items">
 
                 @foreach($cart as $item)
@@ -49,7 +74,15 @@
 
                     <div class="cart-card">
 
+                        {{-- GLOW --}}
+                        <div class="cart-card-glow"></div>
+
+                        {{-- INFO --}}
                         <div class="cart-info">
+
+                            <span class="cart-category">
+                                Premium Menu
+                            </span>
 
                             <h3>
 
@@ -57,7 +90,7 @@
 
                             </h3>
 
-                            <p>
+                            <p class="cart-price">
 
                                 Rp {{ number_format($item['price'], 0, ',', '.') }}
 
@@ -65,10 +98,10 @@
 
                         </div>
 
-                        <!-- QTY CONTROL -->
+                        {{-- QTY --}}
                         <div class="cart-qty">
 
-                            <!-- DECREASE -->
+                            {{-- DECREASE --}}
                             <form action="{{ route('customer.cart.update', $item['id']) }}"
                                   method="POST">
 
@@ -81,7 +114,7 @@
                                 <button type="submit"
                                         class="qty-btn">
 
-                                    -
+                                    <i class="fa-solid fa-minus"></i>
 
                                 </button>
 
@@ -93,7 +126,7 @@
 
                             </span>
 
-                            <!-- INCREASE -->
+                            {{-- INCREASE --}}
                             <form action="{{ route('customer.cart.update', $item['id']) }}"
                                   method="POST">
 
@@ -106,7 +139,7 @@
                                 <button type="submit"
                                         class="qty-btn">
 
-                                    +
+                                    <i class="fa-solid fa-plus"></i>
 
                                 </button>
 
@@ -114,13 +147,14 @@
 
                         </div>
 
+                        {{-- SUBTOTAL --}}
                         <div class="cart-subtotal">
 
                             Rp {{ number_format($subtotal, 0, ',', '.') }}
 
                         </div>
 
-                        <!-- REMOVE -->
+                        {{-- REMOVE --}}
                         <form action="{{ route('customer.cart.remove', $item['id']) }}"
                               method="POST">
 
@@ -130,7 +164,7 @@
                             <button type="submit"
                                     class="remove-btn">
 
-                                Remove
+                                <i class="fa-solid fa-trash"></i>
 
                             </button>
 
@@ -142,17 +176,34 @@
 
             </div>
 
-            <!-- SUMMARY -->
+            {{-- SUMMARY --}}
             <div class="cart-summary">
 
-                <h2>
+                <div class="summary-glow"></div>
+
+                <span class="summary-label">
+
                     Order Summary
+
+                </span>
+
+                <h2>
+
+                    Ready To Checkout
+
                 </h2>
 
-                <div class="summary-row">
+                <p>
+
+                    Your selected items are ready
+                    to be processed.
+
+                </p>
+
+                <div class="summary-total">
 
                     <span>
-                        Total
+                        Total Payment
                     </span>
 
                     <strong>
@@ -168,6 +219,8 @@
 
                     Proceed to Checkout
 
+                    <i class="fa-solid fa-arrow-right"></i>
+
                 </a>
 
             </div>
@@ -176,22 +229,36 @@
 
     @else
 
+        {{-- EMPTY --}}
         <div class="cart-empty">
 
-            <i class="fa-solid fa-cart-shopping"></i>
+            <div class="empty-orb"></div>
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+            </div>
 
             <h2>
+
                 Your cart is empty
+
             </h2>
 
             <p>
-                Add some delicious menu items first.
+
+                Discover handcrafted coffee and
+                delicious foods from our menu.
+
             </p>
 
             <a href="{{ route('customer.menu') }}"
                class="cart-btn">
 
                 Explore Menu
+
+                <i class="fa-solid fa-arrow-right"></i>
 
             </a>
 

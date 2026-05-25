@@ -21,199 +21,275 @@
 
 <div class="customer-checkout">
 
-    <div class="checkout-header">
+    {{-- ===================================================== --}}
+    {{-- HERO --}}
+    {{-- ===================================================== --}}
+    <section class="checkout-hero">
 
-        <h1>
-            Checkout
-        </h1>
+        <div class="checkout-hero-inner">
 
-        <p>
-            Complete your order information.
-        </p>
+            <span class="checkout-eyebrow">
 
-    </div>
+                <span class="eyebrow-dot"></span>
 
+                Secure Checkout • Smooth Experience
+
+            </span>
+
+            <h1 class="checkout-title">
+
+                Complete Your
+                <em>Order</em>
+
+            </h1>
+
+            <p class="checkout-desc">
+
+                Fill in your order information and
+                finalize your premium coffee experience.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    {{-- ===================================================== --}}
+    {{-- CONTENT --}}
+    {{-- ===================================================== --}}
     <form action="{{ route('customer.checkout.store') }}"
           method="POST"
-          class="checkout-container">
+          class="checkout-layout">
 
         @csrf
 
-        <!-- LEFT -->
+        {{-- LEFT --}}
         <div class="checkout-form">
 
-            <!-- ORDER TYPE -->
-            <div class="checkout-group">
+            {{-- ORDER TYPE --}}
+            <div class="checkout-card">
 
-                <label>
-                    Order Type
-                </label>
+                <div class="checkout-card-glow"></div>
 
-                <select name="order_type"
-                        id="order_type"
-                        class="checkout-input">
+                <div class="checkout-group">
 
-                    <option value="pickup">
-                        Pickup
-                    </option>
+                    <label>
+                        Order Type
+                    </label>
 
-                    <option value="delivery">
-                        Delivery
-                    </option>
+                    <select name="order_type"
+                            id="order_type"
+                            class="checkout-input">
 
-                </select>
+                        <option value="pickup">
+                            Pickup
+                        </option>
 
-            </div>
+                        <option value="delivery">
+                            Delivery
+                        </option>
 
-            <!-- CUSTOMER NAME -->
-            <div class="checkout-group">
-
-                <label>
-                    Customer Name
-                </label>
-
-                <input type="text"
-                       name="customer_name"
-                       class="checkout-input"
-                       value="{{ auth()->user()->name ?? '' }}"
-                       required>
-
-            </div>
-
-            <!-- PHONE -->
-            <div class="checkout-group">
-
-                <label>
-                    Phone Number
-                </label>
-
-                <input type="text"
-                       name="customer_phone"
-                       class="checkout-input"
-                       required>
-
-            </div>
-
-            <!-- ADDRESS -->
-            <div class="checkout-group"
-                 id="address-field">
-
-                <label>
-                    Delivery Address
-                </label>
-
-                <textarea name="customer_address"
-                          class="checkout-input"
-                          rows="4"></textarea>
-
-            </div>
-
-            <!-- PAYMENT -->
-            <div class="checkout-group">
-
-                <label>
-                    Payment Method
-                </label>
-
-                <select name="payment_method"
-                        id="payment_method"
-                        class="checkout-input">
-
-                    <option value="cash">
-                        Cash
-                    </option>
-
-                    <option value="qris">
-                        QRIS
-                    </option>
-
-                </select>
-
-            </div>
-
-            <!-- QRIS -->
-            <div id="qris-section"
-                 style="display: none;">
-
-                <div class="qris-box">
-
-                    <h3>
-                        Scan QRIS
-                    </h3>
-
-                    <img src="{{ asset('images/qris.png') }}"
-                         alt="QRIS"
-                         class="qris-image">
-
-                    <p>
-                        Complete payment using QRIS before order processing.
-                    </p>
+                    </select>
 
                 </div>
 
             </div>
 
-            <!-- NOTES -->
-            <div class="checkout-group">
+            {{-- CUSTOMER --}}
+            <div class="checkout-card">
 
-                <label>
-                    Notes
-                </label>
+                <div class="checkout-card-glow"></div>
 
-                <textarea name="notes"
-                          class="checkout-input"
-                          rows="4"></textarea>
+                <div class="checkout-group">
+
+                    <label>
+                        Customer Name
+                    </label>
+
+                    <input type="text"
+                           name="customer_name"
+                           class="checkout-input"
+                           value="{{ auth()->user()->name ?? '' }}"
+                           required>
+
+                </div>
+
+                <div class="checkout-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input type="text"
+                           name="customer_phone"
+                           class="checkout-input"
+                           required>
+
+                </div>
+
+                <div class="checkout-group"
+                     id="address-field">
+
+                    <label>
+                        Delivery Address
+                    </label>
+
+                    <textarea name="customer_address"
+                              rows="4"
+                              class="checkout-input"></textarea>
+
+                </div>
 
             </div>
 
-        </div>
+            {{-- PAYMENT --}}
+            <div class="checkout-card">
 
-        <!-- RIGHT -->
-        <div class="checkout-summary">
+                <div class="checkout-card-glow"></div>
 
-            <h2>
-                Order Summary
-            </h2>
+                <div class="checkout-group">
 
-            @foreach($cart as $item)
+                    <label>
+                        Payment Method
+                    </label>
 
-                @php
-                    $subtotal = $item['price'] * $item['qty'];
-                    $total += $subtotal;
-                @endphp
+                    <select name="payment_method"
+                            id="payment_method"
+                            class="checkout-input">
 
-                <div class="summary-item">
+                        <option value="cash">
+                            Cash
+                        </option>
 
-                    <div>
+                        <option value="qris">
+                            QRIS
+                        </option>
 
-                        <strong>
+                    </select>
 
-                            {{ $item['name'] }}
+                </div>
 
-                        </strong>
+                {{-- QRIS --}}
+                <div id="qris-section"
+                     style="display:none;">
+
+                    <div class="qris-box">
+
+                        <div class="qris-orb"></div>
+
+                        <h3>
+
+                            Scan QRIS
+
+                        </h3>
+
+                        <img src="{{ asset('images/qris.png') }}"
+                             alt="QRIS"
+                             class="qris-image">
 
                         <p>
 
-                            x{{ $item['qty'] }}
+                            Complete your payment before
+                            order processing begins.
 
                         </p>
 
                     </div>
 
-                    <span>
+                </div>
 
-                        Rp {{ number_format($subtotal, 0, ',', '.') }}
+            </div>
 
-                    </span>
+            {{-- NOTES --}}
+            <div class="checkout-card">
+
+                <div class="checkout-card-glow"></div>
+
+                <div class="checkout-group">
+
+                    <label>
+                        Notes
+                    </label>
+
+                    <textarea name="notes"
+                              rows="4"
+                              class="checkout-input"></textarea>
 
                 </div>
 
-            @endforeach
+            </div>
 
+        </div>
+
+        {{-- RIGHT --}}
+        <div class="checkout-summary">
+
+            <div class="summary-glow"></div>
+
+            <span class="summary-label">
+
+                Order Summary
+
+            </span>
+
+            <h2>
+
+                Ready To Brew
+
+            </h2>
+
+            <p>
+
+                Review your selected items before
+                placing the order.
+
+            </p>
+
+            {{-- ITEMS --}}
+            <div class="summary-items">
+
+                @foreach($cart as $item)
+
+                    @php
+                        $subtotal = $item['price'] * $item['qty'];
+                        $total += $subtotal;
+                    @endphp
+
+                    <div class="summary-item">
+
+                        <div class="summary-info">
+
+                            <strong>
+
+                                {{ $item['name'] }}
+
+                            </strong>
+
+                            <span>
+
+                                Qty {{ $item['qty'] }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="summary-price">
+
+                            Rp {{ number_format($subtotal, 0, ',', '.') }}
+
+                        </div>
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+            {{-- TOTAL --}}
             <div class="summary-total">
 
                 <span>
-                    Total
+                    Total Payment
                 </span>
 
                 <strong>
@@ -224,10 +300,13 @@
 
             </div>
 
+            {{-- BUTTON --}}
             <button type="submit"
                     class="checkout-btn">
 
                 Place Order
+
+                <i class="fa-solid fa-arrow-right"></i>
 
             </button>
 

@@ -92,7 +92,7 @@ function removeIngredient(button)
 
 
 // =========================
-// OPEN MODAL
+// OPEN ADD MODAL
 // =========================
 function openAddMenuModal()
 {
@@ -104,7 +104,7 @@ function openAddMenuModal()
 
 
 // =========================
-// CLOSE MODAL
+// CLOSE ADD MODAL
 // =========================
 function closeAddMenuModal()
 {
@@ -119,20 +119,33 @@ function closeAddMenuModal()
 // CLOSE MODAL OUTSIDE CLICK
 // =========================
 window.addEventListener(
+
     'click',
 
     function(e)
     {
-        const modal = document.getElementById(
+        const addModal = document.getElementById(
             'addMenuModal'
         );
 
-        if(e.target === modal){
+        const editModal = document.getElementById(
+            'editMenuModal'
+        );
+
+        // ADD MODAL
+        if(e.target === addModal){
 
             closeAddMenuModal();
         }
+
+        // EDIT MODAL
+        if(e.target === editModal){
+
+            closeEditMenuModal();
+        }
     }
 );
+
 
 // =========================
 // OPEN EDIT MODAL
@@ -144,29 +157,37 @@ function openEditModal(
     category
 )
 {
-    // OPEN MODAL
-    document
-        .getElementById('editMenuModal')
-        .classList
-        .add('active');
+    const modal = document.getElementById(
+        'editMenuModal'
+    );
 
-    // SET FORM ACTION
-    document
-        .getElementById('editMenuForm')
-        .action = `/admin/recipes/${id}`;
+    const form = document.getElementById(
+        'editMenuForm'
+    );
 
-    // FILL INPUTS
-    document
-        .getElementById('edit_name')
-        .value = name;
+    // FORCE URL
+    form.action =
+        window.location.origin +
+        '/admin/products/update/' +
+        id;
 
-    document
-        .getElementById('edit_price')
-        .value = price;
+    // OPEN
+    modal.classList.add('active');
 
-    document
-        .getElementById('edit_category')
-        .value = category;
+    // FILL
+    document.getElementById(
+        'edit_name'
+    ).value = name;
+
+    document.getElementById(
+        'edit_price'
+    ).value = price;
+
+    document.getElementById(
+        'edit_category'
+    ).value = category;
+
+    console.log(form.action);
 }
 
 
