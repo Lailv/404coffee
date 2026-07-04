@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\POS;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Order;
 
 class KitchenController extends Controller
@@ -13,10 +12,12 @@ class KitchenController extends Controller
     // =========================
     public function index()
     {
-
         $orders = Order::where(
+
             'status',
-            'pending'
+
+            'paid'
+
         )
 
         ->latest()
@@ -28,22 +29,27 @@ class KitchenController extends Controller
             'kitchen.index',
 
             compact(
+
                 'orders'
+
             )
+
         );
     }
 
+    // =========================
+    // ORDER DONE
+    // =========================
     public function done($id)
-{
-    $order = Order::findOrFail($id);
+    {
+        $order = Order::findOrFail($id);
 
-    $order->update([
+        $order->update([
 
-        'status' =>
-            'completed'
-    ]);
+            'status' => 'completed'
 
-    return redirect()->back();
-}
+        ]);
 
+        return back();
+    }
 }

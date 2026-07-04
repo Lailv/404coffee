@@ -7,7 +7,8 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
-
+use Midtrans\Config;
+use Midtrans\Snap;
 class CustomerController extends Controller
 {
     public function home()
@@ -166,24 +167,42 @@ class CustomerController extends Controller
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | CLEAR CART
-        |--------------------------------------------------------------------------
-        */
+/*
+|--------------------------------------------------------------------------
+| PAYMENT FLOW
+|--------------------------------------------------------------------------
+*/
 
-        session()->forget('cart');
+if ($request->payment_method == 'cash') {
 
-        return redirect()
+    $order->update([
 
-            ->route('customer.menu')
+        'status' => 'paid'
 
-            ->with(
+    ]);
 
-                'success',
+    session()->forget('cart');
 
-                'Order placed successfully.'
+    return redirect()
 
-            );
+        ->route('customer.menu')
+
+        ->with(
+
+            'success',
+
+            'Order placed successfully.'
+
+        );
+}
+
+return redirect()->route(
+
+    'customer.payment',
+
+    $order
+
+);
     }
 
     public function addToCart(Product $product)

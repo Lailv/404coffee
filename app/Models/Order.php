@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Models\OrderItem;
 use App\Models\Product;
 
 class Order extends Model
 {
     protected $fillable = [
+
+        'user_id',
 
         'order_number',
 
@@ -19,7 +20,16 @@ class Order extends Model
 
         'status',
 
-        'customer_name'
+        'customer_name',
+
+        'customer_phone',
+
+        'customer_address',
+
+        'notes',
+
+        'order_type',
+
     ];
 
     // =========================
@@ -39,14 +49,12 @@ class Order extends Model
     {
         $order = self::create([
 
-            'order_number' =>
-                'INV-' . rand(100, 999),
+            'order_number' => 'INV-' . rand(100, 999),
 
-            'total_amount' =>
-                0,
+            'total_amount' => 0,
 
-            'status' =>
-                'completed'
+            'status' => 'completed',
+
         ]);
 
         $total = 0;
@@ -59,17 +67,14 @@ class Order extends Model
 
             OrderItem::create([
 
-                'order_id' =>
-                    $order->id,
+                'order_id' => $order->id,
 
-                'product_id' =>
-                    $product->id,
+                'product_id' => $product->id,
 
-                'qty' =>
-                    $item['qty'],
+                'qty' => $item['qty'],
 
-                'price' =>
-                    $product->price
+                'price' => $product->price,
+
             ]);
 
             $product->sell(
@@ -77,18 +82,15 @@ class Order extends Model
             );
 
             $total +=
-
                 $product->price
-
                 *
-
                 $item['qty'];
         }
 
         $order->update([
 
-            'total_amount' =>
-                $total
+            'total_amount' => $total,
+
         ]);
 
         return $order;

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Customer\CustomerAuthController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Customer\MidtransController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +144,12 @@ Route::prefix('customer')->group(function () {
 
     Route::middleware('customer')->group(function () {
 
+        /*
+        |--------------------------------------------------------------------------
+        | CHECKOUT
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
 
             '/checkout',
@@ -158,6 +165,42 @@ Route::prefix('customer')->group(function () {
             [CustomerController::class, 'storeOrder']
 
         )->name('customer.checkout.store');
+
+        /*
+        |--------------------------------------------------------------------------
+        | MIDTRANS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+
+            '/payment/{order}',
+
+            [MidtransController::class, 'payment']
+
+        )->name('customer.payment');
+
+        Route::post(
+
+            '/payment/{order}',
+
+            [MidtransController::class, 'pay']
+
+        )->name('customer.payment.pay');
+
+        Route::post(
+
+            '/payment/success/{order}',
+
+            [MidtransController::class, 'success']
+
+        )->name('customer.payment.success');
+
+        /*
+        |--------------------------------------------------------------------------
+        | LOGOUT
+        |--------------------------------------------------------------------------
+        */
 
         Route::post(
 

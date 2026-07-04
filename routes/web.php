@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\POS\KitchenController;
+use App\Http\Controllers\Customer\MidtransController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,20 @@ Route::get('/', function () {
     return redirect('/login');
 
 });
+
+/*
+|--------------------------------------------------------------------------
+| MIDTRANS CALLBACK
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+
+    '/midtrans/callback',
+
+    [MidtransController::class, 'callback']
+
+)->name('midtrans.callback');
 
 /*
 |--------------------------------------------------------------------------

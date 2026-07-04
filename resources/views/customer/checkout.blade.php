@@ -161,40 +161,11 @@
                             Cash
                         </option>
 
-                        <option value="qris">
-                            QRIS
+                        <option value="midtrans">
+                            Midtrans
                         </option>
 
                     </select>
-
-                </div>
-
-                {{-- QRIS --}}
-                <div id="qris-section"
-                     style="display:none;">
-
-                    <div class="qris-box">
-
-                        <div class="qris-orb"></div>
-
-                        <h3>
-
-                            Scan QRIS
-
-                        </h3>
-
-                        <img src="{{ asset('images/qris.png') }}"
-                             alt="QRIS"
-                             class="qris-image">
-
-                        <p>
-
-                            Complete your payment before
-                            order processing begins.
-
-                        </p>
-
-                    </div>
 
                 </div>
 
