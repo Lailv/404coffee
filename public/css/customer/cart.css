@@ -257,10 +257,10 @@
 
     display: flex;
     align-items: center;
-    gap: .8rem;
+    gap: .5rem;
 
     padding:
-        .6rem .8rem;
+        .5rem .6rem;
 
     border-radius: 999px;
 
@@ -272,6 +272,8 @@
 
     width: 38px;
     height: 38px;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
@@ -308,6 +310,55 @@
     text-align: center;
 
     font-weight: 700;
+}
+
+/* QTY MANUAL INPUT */
+
+.qty-input-form {
+
+    display: flex;
+}
+
+.qty-input {
+
+    width: 40px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #fff;
+
+    text-align: center;
+
+    font-family: inherit;
+    font-size: .88rem;
+    font-weight: 700;
+
+    color:
+        var(--text-primary);
+
+    -moz-appearance: textfield;
+
+    transition:
+        all .25s var(--ease);
+}
+
+.qty-input:focus {
+
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(122,158,142,0.25);
+}
+
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+
+    -webkit-appearance: none;
+
+    margin: 0;
 }
 
 /* =========================================================

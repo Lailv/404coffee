@@ -10,9 +10,10 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
 
-            $table->string('payment_method')
-                  ->nullable()
-                  ->change();
+            // pastikan column ADA dulu
+            if (!Schema::hasColumn('orders', 'payment_method')) {
+                $table->string('payment_method')->nullable();
+            }
 
         });
     }
@@ -21,9 +22,9 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
 
-            $table->string('payment_method')
-                  ->default('cash')
-                  ->change();
+            if (Schema::hasColumn('orders', 'payment_method')) {
+                $table->dropColumn('payment_method');
+            }
 
         });
     }

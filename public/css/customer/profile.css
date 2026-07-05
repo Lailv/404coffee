@@ -1,0 +1,537 @@
+/* =========================================================
+   404.Coffee — Profile Page
+   Concept:
+   Soft Luxury • Sage Green • Cream • Minimal Elegant
+   (Consistent with app.css design tokens)
+========================================================= */
+
+/* =========================================================
+   PROFILE PAGE WRAPPER
+========================================================= */
+
+.profile-page {
+
+    position: relative;
+
+    z-index: 2;
+
+    padding: 3.5rem 2rem 5rem;
+}
+
+.profile-container {
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2.5rem;
+}
+
+/* =========================================================
+   PROFILE HEADER
+========================================================= */
+
+.profile-header {
+
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.profile-avatar {
+
+    width: 68px;
+    height: 68px;
+
+    flex-shrink: 0;
+
+    border-radius: 20px;
+
+    background:
+        var(--sage-glow);
+
+    border:
+        1px solid rgba(122,158,142,0.2);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color:
+        var(--sage);
+
+    font-size: 1.5rem;
+}
+
+.profile-info h2 {
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1.9rem;
+    font-weight: 700;
+
+    margin-bottom: .3rem;
+}
+
+.profile-info p {
+
+    font-size: .88rem;
+
+    color:
+        var(--text-secondary);
+}
+
+/* =========================================================
+   PROFILE CARD / FORM
+========================================================= */
+
+.profile-card {
+
+    background:
+        var(--bg-card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    padding: 2.2rem;
+
+    box-shadow:
+        var(--shadow-sm);
+}
+
+.alert {
+
+    padding:
+        .9rem 1.2rem;
+
+    border-radius:
+        var(--radius-sm);
+
+    font-size: .85rem;
+    font-weight: 500;
+
+    margin-bottom: 1.5rem;
+}
+
+.alert-success {
+
+    background:
+        var(--sage-glow);
+
+    border:
+        1px solid rgba(122,158,142,0.25);
+
+    color:
+        var(--sage);
+}
+
+.form-group {
+
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    margin-bottom: 1.4rem;
+}
+
+.form-group label {
+
+    font-size: .72rem;
+    font-weight: 600;
+
+    letter-spacing: .1em;
+    text-transform: uppercase;
+
+    color:
+        var(--text-muted);
+}
+
+.form-group input,
+.form-group textarea {
+
+    width: 100%;
+
+    border-radius:
+        var(--radius-sm);
+
+    border:
+        1px solid var(--border);
+
+    background:
+        var(--bg-soft);
+
+    padding:
+        .9rem 1.1rem;
+
+    font-size: .9rem;
+
+    color:
+        var(--text-primary);
+
+    transition:
+        all .25s var(--ease);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+    outline: none;
+
+    border-color:
+        var(--sage-light);
+
+    background:
+        #fff;
+
+    box-shadow:
+        0 0 0 4px var(--sage-glow);
+}
+
+.form-group input[readonly] {
+
+    color:
+        var(--text-muted);
+
+    cursor: not-allowed;
+}
+
+.form-group textarea {
+
+    resize: vertical;
+
+    min-height: 100px;
+
+    line-height: 1.6;
+}
+
+.save-btn {
+
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+
+    margin-top: .6rem;
+
+    padding:
+        .9rem 1.8rem;
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        var(--sage);
+
+    color: #fff;
+
+    font-size: .85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        all .25s var(--ease);
+}
+
+.save-btn:hover {
+
+    background:
+        #6e9081;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 14px 28px rgba(122,158,142,0.28);
+}
+
+/* =========================================================
+   ORDER HISTORY
+========================================================= */
+
+.order-history {
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.section-title h3 {
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1.4rem;
+    font-weight: 700;
+
+    margin-bottom: .3rem;
+}
+
+.section-title p {
+
+    font-size: .85rem;
+
+    color:
+        var(--text-secondary);
+}
+
+.order-card {
+
+    background:
+        var(--bg-card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-md);
+
+    padding: 1.6rem;
+
+    box-shadow:
+        var(--shadow-sm);
+
+    transition:
+        all .25s var(--ease);
+}
+
+.order-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        var(--shadow-md);
+
+    border-color:
+        var(--sage-light);
+}
+
+.order-header {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding-bottom: 1rem;
+
+    margin-bottom: 1rem;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.order-header h4 {
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    margin-bottom: .2rem;
+}
+
+.order-header small {
+
+    font-size: .75rem;
+
+    color:
+        var(--text-muted);
+}
+
+.order-status {
+
+    padding:
+        .4rem .9rem;
+
+    border-radius: 999px;
+
+    background:
+        var(--sage-glow);
+
+    color:
+        var(--sage);
+
+    font-size: .65rem;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+
+    white-space: nowrap;
+}
+
+.order-body {
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 1.5rem;
+
+    margin-bottom: 1.2rem;
+}
+
+.order-item {
+
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.order-item span {
+
+    font-size: .68rem;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+
+    color:
+        var(--text-muted);
+}
+
+.order-item strong {
+
+    font-size: .95rem;
+    font-weight: 700;
+
+    color:
+        var(--text-primary);
+}
+
+.order-footer {
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detail-btn {
+
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    font-size: .78rem;
+    font-weight: 600;
+
+    color:
+        var(--sage);
+
+    padding:
+        .55rem 1rem;
+
+    border-radius:
+        var(--radius-sm);
+
+    border:
+        1px solid var(--border);
+
+    transition:
+        all .25s var(--ease);
+}
+
+.detail-btn:hover {
+
+    background:
+        var(--sage-glow);
+
+    border-color:
+        var(--sage-light);
+
+    transform:
+        translateY(-2px);
+}
+
+/* =========================================================
+   EMPTY ORDER STATE
+========================================================= */
+
+.empty-order {
+
+    text-align: center;
+
+    padding: 3.5rem 2rem;
+
+    background:
+        var(--bg-card);
+
+    border:
+        1px dashed var(--border);
+
+    border-radius:
+        var(--radius-lg);
+}
+
+.empty-order i {
+
+    font-size: 2.2rem;
+
+    color:
+        var(--text-muted);
+
+    margin-bottom: 1rem;
+}
+
+.empty-order h4 {
+
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    margin-bottom: .4rem;
+}
+
+.empty-order p {
+
+    font-size: .85rem;
+
+    color:
+        var(--text-secondary);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .profile-page {
+        padding: 2.5rem 1.2rem 4rem;
+    }
+
+    .profile-card {
+        padding: 1.5rem;
+    }
+
+    .profile-header {
+        gap: 1rem;
+    }
+
+    .profile-avatar {
+
+        width: 56px;
+        height: 56px;
+
+        font-size: 1.2rem;
+    }
+
+    .profile-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .order-header {
+
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: .6rem;
+    }
+
+    .order-body {
+        gap: 1rem;
+    }
+}

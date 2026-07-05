@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Order;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -19,6 +20,10 @@ use Illuminate\Notifications\Notifiable;
 
     'role',
 
+    'phone',
+
+    'address',
+
 ])]
 
 #[Hidden([
@@ -33,10 +38,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * Casts
-     */
-
     protected function casts(): array
     {
         return [
@@ -46,5 +47,13 @@ class User extends Authenticatable
             'password' => 'hashed',
 
         ];
+    }
+
+    // =========================
+    // RELATION ORDERS
+    // =========================
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

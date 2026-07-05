@@ -1,127 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
-use App\Models\User;
-
-class CustomerAuthController extends Controller
+return new class extends Migration
 {
-    /*
-    |--------------------------------------------------------------------------
-    | LOGIN PAGE
-    |--------------------------------------------------------------------------
-    */
-
-    public function showLogin()
+    public function up(): void
     {
-        return view('customer.auth.login');
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | MANUAL LOGIN
-    |--------------------------------------------------------------------------
-    */
-
-    public function login(Request $request)
+    public function down(): void
     {
-        $credentials = $request->validate([
-
-            'email' => ['required', 'email'],
-
-            'password' => ['required'],
-
-        ]);
-
-        if (Auth::attempt($credentials)) {
-
-            $request->session()->regenerate();
-
-            // ROLE CHECK
-            if (auth()->user()->role !== 'customer') {
-
-                Auth::logout();
-
-                return back()->with(
-                    'error',
-                    'Unauthorized access.'
-                );
-            }
-
-            return redirect()
-                ->route('customer.dashboard');
-        }
-
-        return back()->with(
-            'error',
-            'Invalid credentials.'
-        );
+        Schema::dropIfExists('users');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | GOOGLE REDIRECT
-    |--------------------------------------------------------------------------
-    */
-
-    public function googleRedirect()
-    {
-        return Socialite::driver('google')->redirect();
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | GOOGLE CALLBACK
-    |--------------------------------------------------------------------------
-    */
-
-    public function googleCallback()
-    {
-        $googleUser = Socialite::driver('google')
-            ->stateless()
-            ->user();
-
-        $user = User::updateOrCreate(
-
-            [
-                'email' => $googleUser->getEmail(),
-            ],
-
-            [
-                'name' => $googleUser->getName(),
-
-                'password' => bcrypt('google-auth'),
-
-                'role' => 'customer',
-            ]
-
-        );
-
-        Auth::login($user);
-
-        return redirect()
-            ->route('customer.dashboard');
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | LOGOUT
-    |--------------------------------------------------------------------------
-    */
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect()
-            ->route('customer.login');
-    }
-}
+};

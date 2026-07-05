@@ -120,11 +120,21 @@
 
                             </form>
 
-                            <span class="qty-number">
+                            {{-- INPUT MANUAL --}}
+                            <form action="{{ route('customer.cart.update', $item['id']) }}"
+                                  method="POST"
+                                  class="qty-input-form">
 
-                                {{ $item['qty'] }}
+                                @csrf
 
-                            </span>
+                                <input type="number"
+                                       name="qty"
+                                       value="{{ $item['qty'] }}"
+                                       min="1"
+                                       class="qty-input"
+                                       onchange="this.form.submit()">
+
+                            </form>
 
                             {{-- INCREASE --}}
                             <form action="{{ route('customer.cart.update', $item['id']) }}"

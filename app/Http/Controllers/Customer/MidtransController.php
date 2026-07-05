@@ -14,11 +14,8 @@ class MidtransController extends Controller
     public function payment(Order $order)
     {
         return view(
-
             'customer.payment',
-
             compact('order')
-
         );
     }
 
@@ -49,13 +46,29 @@ class MidtransController extends Controller
 
         ];
 
-        $snapToken = Snap::getSnapToken($params);
+        try {
 
-        return response()->json([
+            $snapToken = Snap::getSnapToken($params);
 
-            'snap_token' => $snapToken,
+            return response()->json([
 
-        ]);
+                'success' => true,
+
+                'snap_token' => $snapToken,
+
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+
+                'success' => false,
+
+                'message' => $e->getMessage(),
+
+            ], 500);
+
+        }
     }
 
     // ======================================================
@@ -107,7 +120,6 @@ class MidtransController extends Controller
                 'message' => 'Order not found'
 
             ], 404);
-
         }
 
         $transaction = $notification->transaction_status;

@@ -123,25 +123,64 @@
                 </a>
 
                 {{-- USER --}}
-                <div class="user-box">
+                @auth
 
-                    <div class="user-avatar">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
+<a href="{{ route('customer.profile') }}"
+   class="user-box">
 
-                    <div class="user-detail">
+    <div class="user-avatar">
 
-                        <small>
-                            {{ auth()->check() ? 'Welcome Back' : 'Guest Mode' }}
-                        </small>
+        <i class="fa-solid fa-user"></i>
 
-                        <strong>
-                            {{ auth()->user()->name ?? 'Guest User' }}
-                        </strong>
+    </div>
 
-                    </div>
+    <div class="user-detail">
 
-                </div>
+        <small>
+
+            Welcome Back
+
+        </small>
+
+        <strong>
+
+            {{ auth()->user()->name }}
+
+        </strong>
+
+    </div>
+
+</a>
+
+@else
+
+<div class="user-box">
+
+    <div class="user-avatar">
+
+        <i class="fa-solid fa-user"></i>
+
+    </div>
+
+    <div class="user-detail">
+
+        <small>
+
+            Guest Mode
+
+        </small>
+
+        <strong>
+
+            Guest User
+
+        </strong>
+
+    </div>
+
+</div>
+
+@endauth
 
                 {{-- LOGOUT --}}
                 @auth

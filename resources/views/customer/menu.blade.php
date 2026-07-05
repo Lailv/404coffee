@@ -122,6 +122,77 @@
 
                         </p>
 
+                        {{-- RATING --}}
+                        <div class="menu-rating">
+
+                            @for($i = 1; $i <= 5; $i++)
+
+                                @if($i <= round($product->rating ?? 0))
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                @else
+
+                                    <i class="fa-regular fa-star"></i>
+
+                                @endif
+
+                            @endfor
+
+                            <span class="rating-value">
+
+                                {{ number_format($product->rating ?? 0, 1) }}
+
+                            </span>
+
+                            <span class="rating-count">
+
+                                ({{ $product->rating_count ?? 0 }})
+
+                            </span>
+
+                        </div>
+
+                        {{-- STOCK INFO --}}
+                        <div class="stock-info stock-info--{{ $product->stock_status }}">
+
+                            <span class="stock-qty">
+
+                                Stok: {{ $product->stock }}
+
+                            </span>
+
+                            @if($product->stock_status == 'out')
+
+                                <span class="stock-badge stock-badge--out">
+
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                    Habis
+
+                                </span>
+
+                            @elseif($product->stock_status == 'low')
+
+                                <span class="stock-badge stock-badge--low">
+
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    Low Stock
+
+                                </span>
+
+                            @else
+
+                                <span class="stock-badge stock-badge--ready">
+
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    Ready
+
+                                </span>
+
+                            @endif
+
+                        </div>
+
                         <div class="menu-footer">
 
                             <div class="menu-price">
@@ -136,7 +207,8 @@
                                 @csrf
 
                                 <button type="submit"
-                                        class="menu-btn">
+                                        class="menu-btn"
+                                        {{ $product->stock_status == 'out' ? 'disabled' : '' }}>
 
                                     <i class="fa-solid fa-plus"></i>
 
@@ -241,6 +313,77 @@
 
                         </p>
 
+                        {{-- RATING --}}
+                        <div class="menu-rating">
+
+                            @for($i = 1; $i <= 5; $i++)
+
+                                @if($i <= round($product->rating ?? 0))
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                @else
+
+                                    <i class="fa-regular fa-star"></i>
+
+                                @endif
+
+                            @endfor
+
+                            <span class="rating-value">
+
+                                {{ number_format($product->rating ?? 0, 1) }}
+
+                            </span>
+
+                            <span class="rating-count">
+
+                                ({{ $product->rating_count ?? 0 }})
+
+                            </span>
+
+                        </div>
+
+                        {{-- STOCK INFO --}}
+                        <div class="stock-info stock-info--{{ $product->stock_status }}">
+
+                            <span class="stock-qty">
+
+                                Stok: {{ $product->stock }}
+
+                            </span>
+
+                            @if($product->stock_status == 'out')
+
+                                <span class="stock-badge stock-badge--out">
+
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                    Habis
+
+                                </span>
+
+                            @elseif($product->stock_status == 'low')
+
+                                <span class="stock-badge stock-badge--low">
+
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    Low Stock
+
+                                </span>
+
+                            @else
+
+                                <span class="stock-badge stock-badge--ready">
+
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    Ready
+
+                                </span>
+
+                            @endif
+
+                        </div>
+
                         <div class="menu-footer">
 
                             <div class="menu-price">
@@ -255,7 +398,8 @@
                                 @csrf
 
                                 <button type="submit"
-                                        class="menu-btn">
+                                        class="menu-btn"
+                                        {{ $product->stock_status == 'out' ? 'disabled' : '' }}>
 
                                     <i class="fa-solid fa-plus"></i>
 
@@ -359,6 +503,37 @@
                             directly from our kitchen.
 
                         </p>
+
+                        {{-- RATING --}}
+                        <div class="menu-rating">
+
+                            @for($i = 1; $i <= 5; $i++)
+
+                                @if($i <= round($product->rating ?? 0))
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                @else
+
+                                    <i class="fa-regular fa-star"></i>
+
+                                @endif
+
+                            @endfor
+
+                            <span class="rating-value">
+
+                                {{ number_format($product->rating ?? 0, 1) }}
+
+                            </span>
+
+                            <span class="rating-count">
+
+                                ({{ $product->rating_count ?? 0 }})
+
+                            </span>
+
+                        </div>
 
                         <div class="menu-footer">
 

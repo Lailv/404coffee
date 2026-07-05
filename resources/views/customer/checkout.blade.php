@@ -85,9 +85,7 @@
                             Pickup
                         </option>
 
-                        <option value="delivery">
-                            Delivery
-                        </option>
+                        
 
                     </select>
 
@@ -123,6 +121,7 @@
                     <input type="text"
                            name="customer_phone"
                            class="checkout-input"
+                           value="{{ auth()->user()->phone ?? '' }}"
                            required>
 
                 </div>
@@ -136,7 +135,7 @@
 
                     <textarea name="customer_address"
                               rows="4"
-                              class="checkout-input"></textarea>
+                              class="checkout-input">{{ auth()->user()->address ?? '' }}</textarea>
 
                 </div>
 

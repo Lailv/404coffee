@@ -36,8 +36,20 @@ fetch("{{ route('customer.payment.pay', $order) }}", {
     }
 
 })
+
 .then(response => response.json())
+
 .then(result => {
+
+    console.log(result);
+
+    if (!result.success) {
+
+        alert(result.message);
+
+        return;
+
+    }
 
     snap.pay(result.snap_token, {
 
@@ -56,7 +68,9 @@ fetch("{{ route('customer.payment.pay', $order) }}", {
                 }
 
             })
+
             .then(response => response.json())
+
             .then(() => {
 
                 alert("Payment Success");
@@ -75,6 +89,8 @@ fetch("{{ route('customer.payment.pay', $order) }}", {
 
         onError: function(result){
 
+            console.log(result);
+
             alert("Payment Failed");
 
         },
@@ -86,6 +102,14 @@ fetch("{{ route('customer.payment.pay', $order) }}", {
         }
 
     });
+
+})
+
+.catch(error => {
+
+    console.error(error);
+
+    alert("Error : " + error);
 
 });
 

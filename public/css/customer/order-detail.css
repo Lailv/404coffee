@@ -1,0 +1,476 @@
+/* =========================================================
+   404.Coffee — Order Detail Page
+   Concept:
+   Soft Luxury • Sage Green • Cream • Minimal Elegant
+   (Consistent with app.css & profile.css design tokens)
+========================================================= */
+
+/* =========================================================
+   PAGE WRAPPER
+========================================================= */
+
+.order-detail-page {
+
+    position: relative;
+
+    z-index: 2;
+
+    padding: 3.5rem 2rem 5rem;
+}
+
+.order-detail-container {
+
+    max-width: 800px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.6rem;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.order-detail-header {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+
+    flex-wrap: wrap;
+}
+
+.order-detail-header h2 {
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1.9rem;
+    font-weight: 700;
+
+    margin-bottom: .3rem;
+}
+
+.order-detail-header p {
+
+    font-size: .88rem;
+
+    color:
+        var(--text-secondary);
+}
+
+.back-btn {
+
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+
+    padding:
+        .75rem 1.3rem;
+
+    border-radius:
+        var(--radius-sm);
+
+    border:
+        1px solid var(--border);
+
+    background:
+        var(--bg-card);
+
+    font-size: .8rem;
+    font-weight: 600;
+
+    color:
+        var(--text-secondary);
+
+    transition:
+        all .25s var(--ease);
+}
+
+.back-btn:hover {
+
+    background:
+        var(--sage-glow);
+
+    color:
+        var(--sage);
+
+    border-color:
+        var(--sage-light);
+
+    transform:
+        translateY(-2px);
+}
+
+/* =========================================================
+   DETAIL CARD (ORDER INFO)
+========================================================= */
+
+.detail-card,
+.items-card,
+.rating-card {
+
+    background:
+        var(--bg-card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    padding: 1.8rem 2rem;
+
+    box-shadow:
+        var(--shadow-sm);
+}
+
+.detail-row {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding: .85rem 0;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.detail-row:last-child {
+
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.detail-row:first-child {
+
+    padding-top: 0;
+}
+
+.detail-row span {
+
+    font-size: .72rem;
+    font-weight: 600;
+
+    letter-spacing: .1em;
+    text-transform: uppercase;
+
+    color:
+        var(--text-muted);
+}
+
+.detail-row strong {
+
+    font-size: .9rem;
+    font-weight: 700;
+
+    color:
+        var(--text-primary);
+
+    text-align: right;
+}
+
+.detail-row strong.status {
+
+    padding:
+        .4rem .9rem;
+
+    border-radius: 999px;
+
+    background:
+        var(--sage-glow);
+
+    color:
+        var(--sage);
+
+    font-size: .68rem;
+    letter-spacing: .06em;
+}
+
+/* =========================================================
+   ORDER ITEMS
+========================================================= */
+
+.items-card h3 {
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    margin-bottom: 1rem;
+}
+
+.item-row {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding: 1rem 0;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.item-row:last-child {
+
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.item-row:first-of-type {
+
+    padding-top: 0;
+}
+
+.item-row h4 {
+
+    font-size: .92rem;
+    font-weight: 700;
+
+    margin-bottom: .25rem;
+}
+
+.item-row small {
+
+    font-size: .75rem;
+
+    color:
+        var(--text-muted);
+}
+
+.item-row > strong {
+
+    font-size: .9rem;
+    font-weight: 700;
+
+    color:
+        var(--sage);
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   TOTAL CARD
+========================================================= */
+
+.total-card {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding: 1.5rem 2rem;
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        var(--sage);
+
+    box-shadow:
+        0 16px 34px rgba(122,158,142,0.28);
+}
+
+.total-card span {
+
+    font-size: .78rem;
+    font-weight: 600;
+
+    letter-spacing: .1em;
+    text-transform: uppercase;
+
+    color:
+        rgba(255,255,255,0.85);
+}
+
+.total-card strong {
+
+    font-size: 1.4rem;
+    font-weight: 700;
+
+    color: #fff;
+}
+
+/* =========================================================
+   RATING CARD
+========================================================= */
+
+.rating-card {
+
+    text-align: center;
+
+    padding: 2.2rem 2rem;
+}
+
+.rating-card h3 {
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    margin-bottom: .5rem;
+}
+
+.rating-card p {
+
+    font-size: .85rem;
+
+    color:
+        var(--text-secondary);
+
+    margin-bottom: 1.6rem;
+}
+
+.rating-card form {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 1.1rem;
+}
+
+.rating-select {
+
+    width: 100%;
+
+    max-width: 320px;
+}
+
+.rating-select select {
+
+    width: 100%;
+
+    border-radius:
+        var(--radius-sm);
+
+    border:
+        1px solid var(--border);
+
+    background:
+        var(--bg-soft);
+
+    padding:
+        .85rem 1.1rem;
+
+    font-size: .88rem;
+    font-weight: 500;
+
+    color:
+        var(--text-primary);
+
+    cursor: pointer;
+
+    transition:
+        all .25s var(--ease);
+}
+
+.rating-select select:focus {
+
+    outline: none;
+
+    border-color:
+        var(--sage-light);
+
+    background:
+        #fff;
+
+    box-shadow:
+        0 0 0 4px var(--sage-glow);
+}
+
+.rating-btn {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+
+    padding:
+        .9rem 1.9rem;
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        var(--rose);
+
+    color: #fff;
+
+    font-size: .85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        all .25s var(--ease);
+}
+
+.rating-btn:hover {
+
+    background:
+        #b07159;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 14px 28px rgba(196,131,106,0.3);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .order-detail-page {
+        padding: 2.5rem 1.2rem 4rem;
+    }
+
+    .order-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .detail-card,
+    .items-card,
+    .rating-card {
+        padding: 1.4rem 1.4rem;
+    }
+
+    .detail-row,
+    .item-row {
+        flex-wrap: wrap;
+        gap: .4rem;
+    }
+
+    .detail-row strong,
+    .item-row > strong {
+        text-align: left;
+    }
+
+    .total-card {
+        padding: 1.3rem 1.5rem;
+    }
+
+    .total-card strong {
+        font-size: 1.2rem;
+    }
+}
