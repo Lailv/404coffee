@@ -48,9 +48,65 @@
     </section>
 
     {{-- ===================================================== --}}
+    {{-- SEARCH & FILTER TOOLBAR --}}
+    {{-- ===================================================== --}}
+    <div class="menu-toolbar">
+
+        <div class="menu-search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input type="text"
+                   id="menuSearchInput"
+                   placeholder="Cari menu favoritmu...">
+
+            <button type="button"
+                    id="menuSearchClear"
+                    class="menu-search-clear"
+                    aria-label="Clear search">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <div class="menu-filters" id="menuFilters">
+
+            <button type="button" class="filter-chip active" data-filter="all">
+                All Menu
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="coffee">
+                Coffee
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="non-coffee">
+                Non Coffee
+            </button>
+
+            <button type="button" class="filter-chip" data-filter="food">
+                Food
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="menu-no-result" id="menuNoResult">
+
+        <i class="fa-solid fa-mug-hot"></i>
+
+        <h3>No Menu Found</h3>
+
+        <p>Coba kata kunci lain atau ganti kategori filter.</p>
+
+    </div>
+
+    {{-- ===================================================== --}}
     {{-- COFFEE --}}
     {{-- ===================================================== --}}
-    <section class="menu-section">
+    <section class="menu-section" data-category="coffee">
 
         <div class="section-heading">
 
@@ -68,7 +124,7 @@
 
             @forelse($coffeeProducts as $product)
 
-                <div class="menu-card">
+                <div class="menu-card" data-name="{{ strtolower($product->name) }}">
 
                     <div class="menu-card-glow"></div>
 
@@ -241,7 +297,7 @@
     {{-- ===================================================== --}}
     {{-- NON COFFEE --}}
     {{-- ===================================================== --}}
-    <section class="menu-section">
+    <section class="menu-section" data-category="non-coffee">
 
         <div class="section-heading">
 
@@ -259,7 +315,7 @@
 
             @forelse($nonCoffeeProducts as $product)
 
-                <div class="menu-card">
+                <div class="menu-card" data-name="{{ strtolower($product->name) }}">
 
                     <div class="menu-card-glow"></div>
 
@@ -432,7 +488,7 @@
     {{-- ===================================================== --}}
     {{-- FOOD --}}
     {{-- ===================================================== --}}
-    <section class="menu-section">
+    <section class="menu-section" data-category="food">
 
         <div class="section-heading">
 
@@ -450,7 +506,7 @@
 
             @forelse($foodProducts as $product)
 
-                <div class="menu-card">
+                <div class="menu-card" data-name="{{ strtolower($product->name) }}">
 
                     <div class="menu-card-glow"></div>
 
@@ -582,3 +638,91 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const searchInput  = document.getElementById('menuSearchInput');
+    const clearBtn      = document.getElementById('menuSearchClear');
+    const filterChips    = document.querySelectorAll('.filter-chip');
+    const sections     = document.querySelectorAll('.menu-section[data-category]');
+    const noResultBox   = document.getElementById('menuNoResult');
+
+    let activeFilter = 'all';
+
+    function applyFilter() {
+
+        const keyword = searchInput.value.trim().toLowerCase();
+
+        clearBtn.classList.toggle('is-visible', keyword.length > 0);
+
+        let totalVisible = 0;
+
+        sections.forEach(function (section) {
+
+            const category      = section.dataset.category;
+            const matchCategory = activeFilter === 'all' || activeFilter === category;
+
+            if (!matchCategory) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = '';
+
+            const cards = section.querySelectorAll('.menu-card');
+            let visibleInSection = 0;
+
+            cards.forEach(function (card) {
+
+                const name  = card.dataset.name || '';
+                const match = name.includes(keyword);
+
+                card.style.display = match ? '' : 'none';
+
+                if (match) {
+                    visibleInSection++;
+                    totalVisible++;
+                }
+
+            });
+
+            section.style.display = (visibleInSection === 0 && cards.length > 0)
+                ? 'none'
+                : '';
+
+        });
+
+        noResultBox.classList.toggle('is-visible', totalVisible === 0);
+
+    }
+
+    searchInput.addEventListener('input', applyFilter);
+
+    clearBtn.addEventListener('click', function () {
+        searchInput.value = '';
+        applyFilter();
+        searchInput.focus();
+    });
+
+    filterChips.forEach(function (chip) {
+
+        chip.addEventListener('click', function () {
+
+            filterChips.forEach(function (c) {
+                c.classList.remove('active');
+            });
+
+            chip.classList.add('active');
+            activeFilter = chip.dataset.filter;
+
+            applyFilter();
+
+        });
+
+    });
+
+});
+</script>
+@endpush

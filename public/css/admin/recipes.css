@@ -202,6 +202,194 @@ body {
 }
 
 /* ============================================================
+   SEARCH & FILTER TOOLBAR
+   ============================================================ */
+
+.recipe-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    margin-bottom: 1.5rem;
+}
+
+.recipe-search {
+    position: relative;
+
+    flex: 1;
+
+    min-width: 240px;
+    max-width: 380px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
+
+    padding: 11px 14px;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        border .2s ease,
+        box-shadow .2s ease;
+}
+
+.recipe-search:focus-within {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
+}
+
+.recipe-search i {
+    color: var(--text-hint);
+    font-size: 13px;
+}
+
+.recipe-search input {
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+
+    color: var(--text-primary);
+}
+
+.recipe-search input::placeholder {
+    color: var(--text-hint);
+}
+
+.recipe-search-clear {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--surface-2);
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+.recipe-search-clear.is-visible {
+    display: flex;
+}
+
+.recipe-search-clear:hover {
+    background: var(--red-light);
+    color: var(--red);
+}
+
+.recipe-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-chip {
+    border: 1px solid var(--border);
+    background: var(--surface);
+
+    color: var(--text-secondary);
+
+    padding: 9px 16px;
+
+    border-radius: var(--radius-md);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        all .2s ease;
+}
+
+.filter-chip:hover {
+    border-color: var(--blue-mid);
+    color: var(--blue);
+}
+
+.filter-chip.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+
+    box-shadow: var(--shadow-sm);
+}
+
+/* ============================================================
+   NO RESULT STATE
+   ============================================================ */
+
+.recipe-no-result {
+    display: none;
+
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 3rem 2rem;
+
+    margin-bottom: 1.5rem;
+
+    background: var(--surface);
+
+    border: 1px dashed var(--border);
+
+    border-radius: var(--radius-lg);
+}
+
+.recipe-no-result.is-visible {
+    display: flex;
+}
+
+.recipe-no-result i {
+    font-size: 26px;
+    color: var(--blue-mid);
+
+    margin-bottom: 10px;
+}
+
+.recipe-no-result h3 {
+    font-size: 15px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    margin-bottom: 4px;
+}
+
+.recipe-no-result p {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* ============================================================
    GRID
    ============================================================ */
 
@@ -474,20 +662,6 @@ body {
    ============================================================ */
 
 @keyframes modalIn {
-
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-@keyframes modalIn {
     from {
         opacity: 0;
         transform: translateY(10px) scale(.98);
@@ -497,39 +671,6 @@ body {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
-}
-
-/* ============================================================
-   MODAL HEADER
-   ============================================================ */
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 1.5rem;
-}
-
-.modal-header h2 {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.close-modal {
-    border: none;
-    background: transparent;
-
-    cursor: pointer;
-
-    font-size: 18px;
-    color: var(--text-secondary);
-
-    transition: .2s ease;
-}
-
-.close-modal:hover {
-    color: var(--red);
 }
 
 /* ============================================================
@@ -642,6 +783,15 @@ body {
         gap: 1rem;
     }
 
+    .recipe-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .recipe-search {
+        max-width: 100%;
+    }
+
     .recipe-groups {
         grid-template-columns: 1fr;
     }
@@ -670,18 +820,6 @@ body {
         width: 100%;
     }
 
-}
-
-/* =========================
-   MODAL ACTIVE
-========================= */
-
-.modal-overlay.active {
-    display: flex;
-}
-
-.modal-overlay.active {
-    display: flex;
 }
 
 .recipe-image{

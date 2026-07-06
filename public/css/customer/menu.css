@@ -111,6 +111,258 @@
 }
 
 /* =========================================================
+   SEARCH & FILTER TOOLBAR
+========================================================= */
+
+.menu-toolbar {
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+
+    margin: 0 auto 3.5rem;
+
+    max-width: 1100px;
+}
+
+.menu-search {
+
+    position: relative;
+
+    flex: 1;
+
+    min-width: 260px;
+    max-width: 440px;
+
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+
+    padding:
+        .95rem 1.3rem;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,0.78);
+
+    border:
+        1px solid rgba(122,158,142,0.14);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.03);
+
+    transition:
+        all .3s var(--ease);
+}
+
+.menu-search:focus-within {
+
+    border-color:
+        rgba(122,158,142,0.4);
+
+    box-shadow:
+        0 12px 30px rgba(122,158,142,0.12);
+}
+
+.menu-search i {
+
+    color:
+        var(--sage);
+
+    font-size: .9rem;
+}
+
+.menu-search input {
+
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: .92rem;
+    font-family: inherit;
+
+    color:
+        var(--text-primary);
+}
+
+.menu-search input::placeholder {
+
+    color:
+        var(--text-secondary);
+}
+
+.menu-search-clear {
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 26px;
+    height: 26px;
+
+    border: none;
+    border-radius: 50%;
+
+    background:
+        rgba(122,158,142,0.12);
+
+    color:
+        var(--sage);
+
+    font-size: .72rem;
+
+    cursor: pointer;
+
+    transition:
+        all .25s var(--ease);
+}
+
+.menu-search-clear.is-visible {
+    display: flex;
+}
+
+.menu-search-clear:hover {
+
+    background:
+        var(--sage);
+
+    color: #fff;
+}
+
+.menu-filters {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+}
+
+.filter-chip {
+
+    padding:
+        .65rem 1.2rem;
+
+    border-radius: 999px;
+
+    border:
+        1px solid rgba(122,158,142,0.18);
+
+    background:
+        rgba(255,255,255,0.7);
+
+    color:
+        var(--text-secondary);
+
+    font-size: .78rem;
+    font-weight: 600;
+
+    letter-spacing: .04em;
+
+    cursor: pointer;
+
+    transition:
+        all .25s var(--ease);
+}
+
+.filter-chip:hover {
+
+    border-color:
+        var(--sage);
+
+    color:
+        var(--sage);
+}
+
+.filter-chip.active {
+
+    background:
+        var(--sage);
+
+    border-color:
+        var(--sage);
+
+    color: #fff;
+
+    box-shadow:
+        0 10px 24px rgba(122,158,142,0.25);
+}
+
+/* =========================================================
+   NO RESULT STATE
+========================================================= */
+
+.menu-no-result {
+
+    display: none;
+
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    padding:
+        4rem 2rem;
+
+    margin-bottom: 3rem;
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,255,255,0.78);
+
+    border:
+        1px solid rgba(122,158,142,0.12);
+
+    backdrop-filter: blur(14px);
+}
+
+.menu-no-result.is-visible {
+    display: flex;
+}
+
+.menu-no-result i {
+
+    font-size: 2.2rem;
+
+    color:
+        var(--sage);
+
+    margin-bottom: 1rem;
+
+    opacity: .6;
+}
+
+.menu-no-result h3 {
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1.4rem;
+
+    color:
+        var(--text-primary);
+
+    margin-bottom: .5rem;
+}
+
+.menu-no-result p {
+
+    font-size: .88rem;
+
+    color:
+        var(--text-secondary);
+}
+
+/* =========================================================
    SECTION
 ========================================================= */
 
@@ -167,7 +419,7 @@
 
     display: grid;
     grid-template-columns:
-        repeat(auto-fit, minmax(280px, 1fr));
+        repeat(auto-fill, minmax(280px, 1fr));
 
     gap: 1.5rem;
 }
@@ -426,6 +678,16 @@
     .menu-hero {
         padding:
             2rem 0 4rem;
+    }
+
+    .menu-toolbar {
+
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu-search {
+        max-width: 100%;
     }
 
     .section-heading {
