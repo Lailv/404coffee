@@ -59,7 +59,7 @@
                     </option>
 
                     <option value="midtrans">
-                        Midtrans
+                        Midtrans (QRIS / VA / Kartu)
                     </option>
 
                 </select>
@@ -101,3 +101,6 @@
     </div>
 
 </div>
+
+{{-- Snap.js sudah di-load secara global di kasir/pos.blade.php,
+     jadi TIDAK perlu load ulang di sini. --}}

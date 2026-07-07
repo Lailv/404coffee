@@ -4,158 +4,59 @@ namespace App\Http\Controllers\POS;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Illuminate\Http\Request;
-use Midtrans\Config;
-use Midtrans\Notification;
-use Midtrans\Snap;
+use App\Services\MidtransService;
+use App\Services\PosPaymentService;
 
 class MidtransController extends Controller
 {
     // =========================
-    // PAYMENT PAGE
+    // PAYMENT PAGE (opsional, kalau butuh halaman terpisah)
     // =========================
     public function payment(Order $order)
     {
-        return view(
-            'pos.payment',
-            compact('order')
-        );
+        return view('pos.payment', compact('order'));
     }
 
     // =========================
     // GENERATE SNAP TOKEN
+    // Dipakai juga untuk RETRY pembayaran order yang masih 'pending'
+    // (tinggal panggil endpoint ini lagi dengan order id yang sama)
     // =========================
-    public function pay(Order $order)
+    public function pay(Order $order, MidtransService $midtransService)
     {
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.is_sanitized');
-        Config::$is3ds = config('midtrans.is_3ds');
-
-        $params = [
-
-            'transaction_details' => [
-
-                'order_id' => $order->order_number,
-
-                'gross_amount' => $order->total_amount,
-
-            ],
-
-            'customer_details' => [
-
-                'first_name' => $order->customer_name,
-
-            ],
-
-        ];
-
         try {
-
-            $snapToken = Snap::getSnapToken($params);
+            $snapToken = $midtransService->getSnapToken($order);
 
             return response()->json([
-
-                'success' => true,
-
+                'success'    => true,
                 'snap_token' => $snapToken,
-
             ]);
-
         } catch (\Exception $e) {
-
             return response()->json([
-
                 'success' => false,
-
                 'message' => $e->getMessage(),
-
             ], 500);
-
         }
     }
 
     // =========================
     // PAYMENT SUCCESS
+    // Dipanggil dari Snap.js onSuccess di frontend.
+    // Idempotent -> aman walau webhook juga finalize order yang sama.
     // =========================
-    public function success(Order $order)
+    public function success(Order $order, PosPaymentService $posPaymentService)
     {
-        $order->update([
+        $order = $posPaymentService->finalizePayment($order);
 
-            'status' => 'paid'
-
-        ]);
+        // Set flash yang sama seperti cash flow, supaya receipt modal
+        // di /pos muncul otomatis setelah redirect dari frontend.
+        session()->flash('show_receipt', true);
+        session()->flash('last_order_id', $order->id);
 
         return response()->json([
-
-            'success' => true
-
-        ]);
-    }
-
-    // =========================
-    // CALLBACK MIDTRANS
-    // =========================
-    public function callback(Request $request)
-    {
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.is_sanitized');
-        Config::$is3ds = config('midtrans.is_3ds');
-
-        $notification = new Notification();
-
-        $order = Order::where(
-            'order_number',
-            $notification->order_id
-        )->first();
-
-        if (!$order) {
-
-            return response()->json([
-                'message' => 'Order not found'
-            ], 404);
-        }
-
-        switch ($notification->transaction_status) {
-
-            case 'capture':
-            case 'settlement':
-
-                $order->update([
-                    'status' => 'paid'
-                ]);
-
-                break;
-
-            case 'pending':
-
-                $order->update([
-                    'status' => 'pending'
-                ]);
-
-                break;
-
-            case 'expire':
-
-                $order->update([
-                    'status' => 'expired'
-                ]);
-
-                break;
-
-            case 'cancel':
-            case 'deny':
-
-                $order->update([
-                    'status' => 'cancelled'
-                ]);
-
-                break;
-        }
-
-        return response()->json([
-            'success' => true
+            'success'  => true,
+            'order_id' => $order->id,
+            'status'   => $order->status,
         ]);
     }
 }

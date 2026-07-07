@@ -44,8 +44,17 @@
                 <!-- IMAGE -->
                 <div class="cart-image">
 
-                    <img src="https://via.placeholder.com/100"
-                         alt="{{ $item['name'] }}">
+                    @if(!empty($item['image']))
+
+                        <img src="{{ asset('storage/' . $item['image']) }}"
+                             alt="{{ $item['name'] }}">
+
+                    @else
+
+                        <img src="https://via.placeholder.com/100"
+                             alt="{{ $item['name'] }}">
+
+                    @endif
 
                 </div>
 

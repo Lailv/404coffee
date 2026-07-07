@@ -20,6 +20,15 @@ return Application::configure(basePath: dirname(__DIR__))
 
         ]);
 
+        // Webhook Midtrans dikecualikan dari CSRF check,
+        // karena request datang dari server Midtrans (bukan browser),
+        // jadi tidak membawa CSRF token.
+        $middleware->validateCsrfTokens(except: [
+
+            'midtrans/callback',
+
+        ]);
+
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {

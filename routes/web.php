@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\POS\KitchenController;
-use App\Http\Controllers\Customer\MidtransController;
+use App\Http\Controllers\Midtrans\CallbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +21,17 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 | MIDTRANS CALLBACK
 |--------------------------------------------------------------------------
+| Satu-satunya webhook global untuk semua notifikasi Midtrans,
+| baik dari order Customer maupun order POS.
+| URL INI yang didaftarkan di Dashboard Midtrans ->
+| Settings -> Configuration -> Payment Notification URL
 */
 
 Route::post(
 
     '/midtrans/callback',
 
-    [MidtransController::class, 'callback']
+    [CallbackController::class, 'handle']
 
 )->name('midtrans.callback');
 

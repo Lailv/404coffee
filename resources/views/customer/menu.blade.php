@@ -58,7 +58,7 @@
 
             <input type="text"
                    id="menuSearchInput"
-                   placeholder="Cari menu favoritmu...">
+                   placeholder="Search menu by name">
 
             <button type="button"
                     id="menuSearchClear"
