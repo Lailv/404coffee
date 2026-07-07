@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 
-<script src="{{ asset('js/kasir/pos.js') }}"></script>
-
 <head>
 
     <meta charset="UTF-8">
@@ -71,9 +69,6 @@
 
 </div>
 
-<!-- QRIS MODAL -->
-@include('kasir.partials.qris-modal')
-
 <!-- RECEIPT MODAL -->
 @if(session('show_receipt') && $order)
 
@@ -81,12 +76,16 @@
 
 @endif
 
+<!-- MIDTRANS SNAP -->
+<script
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="{{ config('midtrans.client_key') }}">
+</script>
+
 <!-- JS -->
 <script src="{{ asset('js/kasir/cart.js') }}"></script>
-
 <script src="{{ asset('js/kasir/payment.js') }}"></script>
-
-<script src="{{ asset('js/kasir/qris-modal.js') }}"></script>
+<script src="{{ asset('js/kasir/pos.js') }}"></script>
 
 </body>
 </html>

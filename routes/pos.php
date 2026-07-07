@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\POS\POSController;
 use App\Http\Controllers\POS\CartController;
 use App\Http\Controllers\POS\CheckoutController;
-
+use App\Http\Controllers\POS\MidtransController;
 
 // ======================================================
 // POS MODULE
@@ -17,7 +17,6 @@ Route::get(
     [POSController::class, 'index']
 )->name('pos');
 
-
 // =========================
 // CART
 // =========================
@@ -28,20 +27,17 @@ Route::post(
     [CartController::class, 'addToCart']
 )->name('cart.add');
 
-
 // INCREASE QTY
 Route::post(
     '/cart/increase',
     [CartController::class, 'increaseQty']
 )->name('cart.increase');
 
-
 // DECREASE QTY
 Route::post(
     '/cart/decrease',
     [CartController::class, 'decreaseQty']
 )->name('cart.decrease');
-
 
 // =========================
 // CHECKOUT
@@ -53,9 +49,30 @@ Route::post(
     [CheckoutController::class, 'checkout']
 )->name('checkout');
 
-
 // RECEIPT
 Route::get(
     '/receipt/{id}',
     [CheckoutController::class, 'receipt']
 )->name('receipt');
+
+// =========================
+// MIDTRANS
+// =========================
+
+// HALAMAN PAYMENT
+Route::get(
+    '/payment/{order}',
+    [MidtransController::class, 'payment']
+)->name('pos.payment');
+
+// GENERATE SNAP TOKEN
+Route::post(
+    '/payment/{order}',
+    [MidtransController::class, 'pay']
+)->name('pos.payment.pay');
+
+// PAYMENT SUCCESS (UNTUK DEMO)
+Route::post(
+    '/payment/success/{order}',
+    [MidtransController::class, 'success']
+)->name('pos.payment.success');

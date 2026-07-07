@@ -58,12 +58,8 @@
                         Cash
                     </option>
 
-                    <option value="qris">
-                        QRIS
-                    </option>
-
-                    <option value="debit">
-                        Debit Card
+                    <option value="midtrans">
+                        Midtrans
                     </option>
 
                 </select>
@@ -95,17 +91,6 @@
                     <i class="fa-solid fa-credit-card"></i>
 
                     Checkout
-
-                </button>
-
-                <!-- QRIS -->
-                <button type="button"
-                        onclick="openQrisModal()"
-                        class="payment-btn secondary">
-
-                    <i class="fa-solid fa-qrcode"></i>
-
-                    Show QR Code
 
                 </button>
 
