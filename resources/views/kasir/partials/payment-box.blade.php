@@ -59,7 +59,7 @@
                     </option>
 
                     <option value="midtrans">
-                        Midtrans (QRIS / VA / Kartu)
+                        Midtrans (QRIS / VA / E-Wallet)
                     </option>
 
                 </select>

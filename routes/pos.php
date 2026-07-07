@@ -39,6 +39,18 @@ Route::post(
     [CartController::class, 'decreaseQty']
 )->name('cart.decrease');
 
+// UPDATE QTY (MANUAL INPUT / +/-)
+Route::post(
+    '/cart/update',
+    [CartController::class, 'updateQty']
+)->name('cart.update');
+
+// REMOVE ITEM
+Route::post(
+    '/cart/remove',
+    [CartController::class, 'removeItem']
+)->name('cart.remove');
+
 // =========================
 // CHECKOUT
 // =========================

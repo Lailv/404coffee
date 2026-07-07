@@ -92,11 +92,32 @@
                     <!-- BOTTOM -->
                     <div class="cart-bottom">
 
+                        <!-- REMOVE -->
+                        <form action="{{ route('cart.remove') }}"
+                              method="POST"
+                              class="remove-item-form">
+
+                            @csrf
+
+                            <input type="hidden"
+                                   name="product_id"
+                                   value="{{ $id }}">
+
+                            <button type="submit"
+                                    class="remove-btn"
+                                    title="Hapus item">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </button>
+
+                        </form>
+
                         <!-- QTY -->
                         <div class="qty-control">
 
                             <!-- DECREASE -->
-                            <form action="{{ route('cart.decrease') }}"
+                            <form action="{{ route('cart.update') }}"
                                   method="POST">
 
                                 @csrf
@@ -104,6 +125,10 @@
                                 <input type="hidden"
                                        name="product_id"
                                        value="{{ $id }}">
+
+                                <input type="hidden"
+                                       name="action"
+                                       value="decrease">
 
                                 <button type="submit"
                                         class="qty-btn">
@@ -114,15 +139,29 @@
 
                             </form>
 
-                            <!-- QTY -->
-                            <span class="qty-number">
+                            <!-- QTY (MANUAL INPUT) -->
+                            <form action="{{ route('cart.update') }}"
+                                  method="POST"
+                                  class="qty-input-form">
 
-                                {{ $item['qty'] }}
+                                @csrf
 
-                            </span>
+                                <input type="hidden"
+                                       name="product_id"
+                                       value="{{ $id }}">
+
+                                <input type="number"
+                                       name="qty"
+                                       value="{{ $item['qty'] }}"
+                                       min="1"
+                                       max="99"
+                                       class="qty-input"
+                                       onchange="this.form.submit()">
+
+                            </form>
 
                             <!-- INCREASE -->
-                            <form action="{{ route('cart.increase') }}"
+                            <form action="{{ route('cart.update') }}"
                                   method="POST">
 
                                 @csrf
@@ -130,6 +169,10 @@
                                 <input type="hidden"
                                        name="product_id"
                                        value="{{ $id }}">
+
+                                <input type="hidden"
+                                       name="action"
+                                       value="increase">
 
                                 <button type="submit"
                                         class="qty-btn">
@@ -188,3 +231,50 @@
     </div>
 
 </aside>
+
+<style>
+    /* QTY MANUAL INPUT & REMOVE BUTTON (POS) - scoped styles since pos.css was not provided */
+    .cart-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .qty-input-form {
+        display: inline-flex;
+    }
+
+    .qty-input {
+        width: 44px;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 4px 2px;
+        font-size: 13px;
+        font-family: inherit;
+        -moz-appearance: textfield;
+    }
+
+    .remove-item-form {
+        display: inline-flex;
+    }
+
+    .remove-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border: none;
+        border-radius: 6px;
+        background: #fee2e2;
+        color: #b91c1c;
+        cursor: pointer;
+        transition: background .15s;
+    }
+
+    .remove-btn:hover {
+        background: #fecaca;
+    }
+</style>

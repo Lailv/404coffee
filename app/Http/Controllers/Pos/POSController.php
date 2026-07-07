@@ -49,7 +49,11 @@ class POSController extends Controller
         // =========================
         // PRODUCT FILTER
         // =========================
-        $products = Product::when(
+        $products = Product::with(
+
+            ['recipes.inventory']
+
+        )->when(
 
             $category &&
             $category != 'all',
